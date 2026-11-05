@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohamed Nagiub | Data Analyst</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- RESET & BASE ----- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #0d0f14;
+      color: #eaeef2;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ----- SCROLL ANIMATIONS ----- */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ----- TYPOGRAPHY ----- */
+    .section-title {
+      font-size: 2.2rem; font-weight: 600; margin-bottom: 2rem;
+      letter-spacing: -0.5px; position: relative; display: inline-block;
+    }
+    .section-title::after {
+      content: ''; position: absolute; bottom: -8px; left: 0; width: 60px; height: 4px;
+      background: linear-gradient(90deg, #6c8cff, #a78bfa); border-radius: 4px;
+    }
+    .highlight { color: #a78bfa; }
+
+    /* ----- HEADER / NAV ----- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13, 15, 20, 0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05); padding: 14px 0;
+    }
+    .nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; font-weight: 500; }
+    .nav-links a { font-size: 1rem; transition: color 0.2s; position: relative; }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+      background: #a78bfa; transition: width 0.3s;
+    }
+    .nav-links a:hover { color: #a78bfa; }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ----- HERO ----- */
+    .hero { min-height: 90vh; display: flex; align-items: center; padding: 40px 0; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .hero-content h1 { font-size: 3.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 1.2rem; }
+    .hero-content h1 .highlight {
+      background: linear-gradient(135deg, #6c8cff, #a78bfa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub { font-size: 1.2rem; color: #b0b8c5; max-width: 500px; margin-bottom: 2rem; }
+    .typing-wrapper { font-size: 1.3rem; font-weight: 400; color: #c8d0dd; margin-bottom: 1.8rem; min-height: 2.8rem; }
+    .typing-wrapper span { color: #a78bfa; font-weight: 500; }
+
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 12px 32px; border-radius: 40px;
+      font-weight: 600; transition: all 0.3s; border: none; cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #6c8cff, #a78bfa); color: #fff;
+      box-shadow: 0 8px 24px rgba(108, 140, 255, 0.25);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(108, 140, 255, 0.4); }
+    .btn-outline { background: transparent; border: 2px solid #a78bfa; color: #eaeef2; }
+    .btn-outline:hover { background: rgba(167, 139, 250, 0.1); transform: translateY(-3px); }
+
+    .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; }
+    .hero-visual .placeholder-icon {
+      font-size: 12rem; color: #2a2f3a;
+      background: radial-gradient(circle at 30% 30%, #1e232b, #0d0f14);
+      padding: 40px; border-radius: 40px; border: 1px solid #2a2f3a;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .hero-visual .floating-badge {
+      position: absolute; bottom: 10%; right: 5%;
+      background: #1e232b; padding: 12px 20px; border-radius: 40px;
+      border: 1px solid #2a2f3a; font-size: 0.9rem;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4); animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0); }
+    }
+
+    /* ----- ABOUT ----- */
+    .about { padding: 80px 0; background: #11151b; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .about-text p { color: #b8c0cc; margin-bottom: 1.2rem; font-size: 1.05rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.5rem; }
+    .skill-tag {
+      background: #1e232b; padding: 6px 18px; border-radius: 40px;
+      font-size: 0.9rem; border: 1px solid #2a2f3a; color: #c8d0dd;
+    }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .stat-card {
+      background: #1a1f26; padding: 24px; border-radius: 16px;
+      border: 1px solid #252b34; transition: transform 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-4px); border-color: #a78bfa; }
+    .stat-number { font-size: 2.4rem; font-weight: 700; color: #a78bfa; }
+    .stat-label { color: #8892a0; font-size: 0.95rem; }
+
+    /* ----- SERVICES ----- */
+    .services { padding: 80px 0; background: #0d0f14; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;
+    }
+    .service-card {
+      background: #151a21; border-radius: 20px; padding: 30px;
+      border: 1px solid #252b34; transition: transform 0.3s, border-color 0.3s;
+    }
+    .service-card:hover { transform: translateY(-6px); border-color: #a78bfa; }
+    .service-icon {
+      font-size: 2rem; color: #a78bfa; margin-bottom: 20px;
+      background: rgba(167, 139, 250, 0.1); width: 60px; height: 60px;
+      display: flex; align-items: center; justify-content: center; border-radius: 16px;
+    }
+    .service-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: #eaeef2; }
+    .service-card p { color: #b8c0cc; font-size: 0.95rem; line-height: 1.7; }
+
+    /* ----- PROJECTS ----- */
+    .projects { padding: 80px 0; background: #11151b; }
+    .project-card {
+      background: #151a21; border-radius: 24px; border: 1px solid #252b34;
+      overflow: hidden; transition: transform 0.3s, border-color 0.3s; margin-bottom: 3rem;
+    }
+    .project-card:hover { transform: translateY(-6px); border-color: #6c8cff; }
+    .project-header {
+      padding: 28px 32px 0 32px; display: flex; justify-content: space-between;
+      align-items: flex-start; flex-wrap: wrap; gap: 1rem;
+    }
+    .project-header h3 { font-size: 1.8rem; font-weight: 600; }
+    .project-badge {
+      background: #1e232b; padding: 4px 16px; border-radius: 40px;
+      font-size: 0.85rem; border: 1px solid #2a2f3a; color: #a78bfa;
+    }
+    .project-body { padding: 16px 32px 28px 32px; }
+    .project-body p { color: #b8c0cc; margin-bottom: 1.2rem; }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.2rem; }
+    .project-tech span {
+      background: #0d0f14; padding: 4px 14px; border-radius: 40px;
+      font-size: 0.8rem; border: 1px solid #2a2f3a; color: #a0aab8;
+    }
+
+    .project-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+    .project-actions .btn { padding: 8px 24px; font-size: 0.9rem; }
+
+    /* ----- MODAL / LIGHTBOX ----- */
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.95); z-index: 1000;
+      justify-content: flex-start; align-items: center; overflow-x: auto; padding: 40px;
+      gap: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-content { display: flex; gap: 20px; align-items: center; margin: 0 auto; }
+    .modal-content img {
+      height: 85vh; width: auto; max-width: none; border-radius: 12px;
+      border: 1px solid #2a2f3a; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      object-fit: contain;
+    }
+    .modal-close {
+      position: fixed; top: 20px; right: 20px;
+      background: #1e232b; border: 1px solid #2a2f3a; color: #eaeef2;
+      font-size: 28px; width: 48px; height: 48px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: 0.2s; z-index: 1001;
+    }
+    .modal-close:hover { background: #a78bfa; color: #0d0f14; border-color: #a78bfa; }
+    .modal-overlay::-webkit-scrollbar { height: 8px; }
+    .modal-overlay::-webkit-scrollbar-track { background: #0d0f14; }
+    .modal-overlay::-webkit-scrollbar-thumb { background: #2a2f3a; border-radius: 10px; }
+    .modal-overlay::-webkit-scrollbar-thumb:hover { background: #a78bfa; }
+
+    /* ----- CARDS GRID (For SQL & Power BI) ----- */
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem; margin-top: 2rem;
+    }
+    .mini-card {
+      background: #151a21; border-radius: 24px; border: 1px solid #252b34;
+      padding: 24px 28px; transition: transform 0.3s, border-color 0.3s;
+      display: flex; flex-direction: column;
+    }
+    .mini-card:hover { transform: translateY(-6px); border-color: #6c8cff; }
+    .mini-card h4 { font-size: 1.2rem; margin-bottom: 8px; }
+    .mini-card p { color: #b8c0cc; font-size: 0.95rem; margin-bottom: 16px; flex-grow: 1; }
+    .mini-card .project-tech { margin-bottom: 16px; }
+    
+    .card-badge-pbi { background: #1e232b; border: 1px solid #f2c94c; color: #f2c94c; }
+    .card-badge-sql { background: #1e232b; border: 1px solid #a78bfa; color: #a78bfa; }
+
+    /* ----- CONTACT ----- */
+    .contact { padding: 80px 0; background: #0d0f14; }
+    .contact-wrapper { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .contact-wrapper p { color: #b8c0cc; max-width: 500px; margin-bottom: 2rem; }
+    .contact-links { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; }
+    .contact-links a {
+      font-size: 1.8rem; color: #8892a0;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .contact-links a:hover { color: #a78bfa; transform: scale(1.1); }
+
+    /* ----- FOOTER ----- */
+    footer {
+      padding: 32px 0; border-top: 1px solid #1e232b;
+      text-align: center; color: #5a6475; font-size: 0.9rem;
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-content h1 { font-size: 2.6rem; }
+      .hero-sub { margin: 0 auto 1.5rem; }
+      .btn-group { justify-content: center; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .typing-wrapper { min-height: auto; }
+      .hero-visual .placeholder-icon { font-size: 8rem; padding: 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { gap: 1rem; font-size: 0.9rem; }
+      .hero-content h1 { font-size: 2rem; }
+      .section-title { font-size: 1.8rem; }
+      .project-header { flex-direction: column; }
+      .modal-content img { height: 70vh; }
+      .modal-overlay { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header>
+  <div class="container nav">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- ====== HERO ====== -->
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <h1>Hi, I'm <span class="highlight">Mohamed Nagiub</span></h1>
+      <div class="typing-wrapper">
+        <i class="fas fa-code" style="margin-right:8px; color:#a78bfa;"></i>
+        <span id="typed-text"></span>
+      </div>
+      <p class="hero-sub">
+        Data Analyst & Social Media Manager | Turning raw data into actionable insights and driving growth through data-driven strategies.
+      </p>
+      <div class="btn-group">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Contact Me</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="placeholder-icon">
+        <i class="fas fa-chart-line"></i>
+      </div>
+      <div class="floating-badge">
+        <i class="fas fa-database" style="color:#a78bfa;"></i>
+        <span>Data Analyst</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== ABOUT ====== -->
+<section class="about" id="about">
+  <div class="container">
+    <h2 class="section-title reveal">About Me</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          A recent Computer Technology graduate equipped with strong data analytical skills and a proven ability to collect, process, and interpret complex datasets effectively. I specialize in transforming raw data into actionable insights to support decision-making, with a specific interest in the Education, Automotive, and E-commerce sectors.
+        </p>
+        <p>
+          Beyond data analysis, I have hands-on experience in team leadership, project management, and analyzing user behavior patterns. I also have a solid foundation in UI/UX design and leverage AI tools for task automation and creative problem-solving.
+        </p>
+        <p>
+          I also work as a Social Media Manager, helping brands and educational entities grow by building data-backed strategies, managing paid ad campaigns, and optimizing digital presence.
+        </p>
+        <div class="skill-tags">
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">Social Media Management</span>
+          <span class="skill-tag">Paid Ads (Meta & TikTok)</span>
+          <span class="skill-tag">Data Visualization</span>
+          <span class="skill-tag">UI/UX</span>
+        </div>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-number">5+</div>
+          <div class="stat-label">Projects Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10k+</div>
+          <div class="stat-label">Data Rows Processed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Sectors Explored</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Client Satisfaction</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SERVICES ====== -->
+<section class="services" id="services">
+  <div class="container">
+    <h2 class="section-title reveal">Services & Expertise</h2>
+    <div class="services-grid">
+      
+      <!-- Service 1 -->
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fab fa-facebook-f"></i></div>
+        <h3>Social Media Management</h3>
+        <p>Managing Facebook, Instagram, and TikTok pages professionally. Creating content plans, increasing real engagement, and building sustainable growth strategies based on performance analysis.</p>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fas fa-bullhorn"></i></div>
+        <h3>Paid Advertising</h3>
+        <p>Creating and managing targeted ad campaigns on Meta and TikTok. Focused on precise audience targeting and continuous optimization to achieve the highest Return on Ad Spend (ROAS).</p>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fas fa-chart-pie"></i></div>
+        <h3>Data Analysis & Business Dev.</h3>
+        <p>Using data to uncover gaps, understand user behavior, and provide actionable recommendations. Helping businesses make informed decisions to improve sales and engagement.</p>
+      </div>
+
+      <!-- Service 4 -->
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h3>Educational Solutions</h3>
+        <p>Digital solutions for teachers, schools, and academies. Streamlining online platforms, managing student data efficiently, preparing e-exams, and generating performance reports.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== PROJECTS ====== -->
+<section class="projects" id="projects">
+  <div class="container">
+    <h2 class="section-title reveal">Featured Projects</h2>
+
+    <!-- 1. Excel Sales Dashboard -->
+    <div class="project-card reveal">
+      <div class="project-header">
+        <h3>Sales Analysis Dashboard (Excel)</h3>
+        <span class="project-badge"><i class="fas fa-chart-pie"></i> Data Analytics</span>
+      </div>
+      <div class="project-body">
+        <p>
+          A comprehensive sales analysis project built from a raw dataset. Cleaned, structured, and extracted meaningful insights to identify trends, optimize shipping modes, and improve order priority decisions.
+        </p>
+        <div class="project-tech">
+          <span>Excel</span><span>Data Cleaning</span><span>Pivot Tables</span><span>Dashboard Design</span>
+        </div>
+        <div class="project-actions">
+          <a href="javascript:void(0)" class="btn btn-primary" style="padding:8px 24px; font-size:0.9rem;" onclick="openModal('dashboardModal')">
+            <i class="fas fa-eye"></i> View Dashboard
+          </a>
+          <a href="#" class="btn btn-outline" style="padding:8px 24px; font-size:0.9rem;">
+            <i class="fab fa-github"></i> Source Code
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Power BI Projects -->
+    <h3 class="reveal" style="margin-top: 3rem; margin-bottom: 1rem; color: #a78bfa; font-size: 1.5rem;">Power BI Dashboards</h3>
+    <div class="cards-grid">
+      <!-- Sales Report -->
+      <div class="mini-card reveal">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:8px;">
+          <h4>Sales Report</h4>
+          <span class="project-badge card-badge-pbi" style="font-size:0.7rem;"><i class="fas fa-chart-line"></i> Power BI</span>
+        </div>
+        <p>Interactive dashboard tracking 31K orders, 171M total sales, and 295 products across regions (Southwest, Canada, Northwest) and categories.</p>
+        <div class="project-tech"><span>Power BI</span><span>Data Modeling</span></div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('powerbiSalesModal')"><i class="fas fa-eye"></i> View Dashboard</a>
+          <a href="#" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fas fa-external-link-alt"></i> Live Report</a>
+        </div>
+      </div>
+
+      <!-- HR Analysis -->
+      <div class="mini-card reveal">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:8px;">
+          <h4>HR Analysis</h4>
+          <span class="project-badge card-badge-pbi" style="font-size:0.7rem;"><i class="fas fa-users"></i> Power BI</span>
+        </div>
+        <p>HR dashboard tracking 89 employees, AVG age 30, AVG salary $7.8K, performance by department, and gender distribution across years.</p>
+        <div class="project-tech"><span>Power BI</span><span>HR Metrics</span></div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('powerbiHRModal')"><i class="fas fa-eye"></i> View Dashboard</a>
+          <a href="#" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fas fa-external-link-alt"></i> Live Report</a>
+        </div>
+      </div>
+
+      <!-- E-Commerce Dashboard -->
+      <div class="mini-card reveal">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:8px;">
+          <h4>E-Commerce Store</h4>
+          <span class="project-badge card-badge-pbi" style="font-size:0.7rem;"><i class="fas fa-shopping-cart"></i> Power BI</span>
+        </div>
+        <p>E-commerce dashboard analyzing 10K orders, 70M total sales, AOV 7.0K, customer segmentation (Consumer/Corporate), and loyalty statuses.</p>
+        <div class="project-tech"><span>Power BI</span><span>Customer Segmentation</span></div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('powerbiEcommerceModal')"><i class="fas fa-eye"></i> View Dashboard</a>
+          <a href="#" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fas fa-external-link-alt"></i> Live Report</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. SQL Projects -->
+    <h3 class="reveal" style="margin-top: 3rem; margin-bottom: 1rem; color: #a78bfa; font-size: 1.5rem;">SQL Database Design</h3>
+    <div class="cards-grid">
+      <div class="mini-card reveal">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:8px;">
+          <h4>Hospital DB Schema</h4>
+          <span class="project-badge card-badge-sql" style="font-size:0.7rem;"><i class="fas fa-database"></i> SQL</span>
+        </div>
+        <p>Complete database design for hospital management with departments, doctors, patients, medicines, and treatment records.</p>
+        <div class="project-tech"><span>SQL</span><span>Relationships</span><span>Normalization</span></div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="#" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fab fa-github"></i> View Code</a>
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('hospitalErdModal')"><i class="fas fa-project-diagram"></i> View ERD</a>
+        </div>
+      </div>
+
+      <div class="mini-card reveal">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:8px;">
+          <h4>E-Commerce DB Schema</h4>
+          <span class="project-badge card-badge-sql" style="font-size:0.7rem;"><i class="fas fa-database"></i> SQL</span>
+        </div>
+        <p>Scalable schema for e-commerce with categories, vendors, products, customers, orders, and lifecycle tracking.</p>
+        <div class="project-tech"><span>SQL</span><span>ERD</span><span>Joins</span></div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="#" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fab fa-github"></i> View Code</a>
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('ecommerceErdModal')"><i class="fas fa-project-diagram"></i> View ERD</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ====== CONTACT ====== -->
+<section class="contact" id="contact">
+  <div class="container contact-wrapper">
+    <h2 class="section-title reveal">Let's Connect</h2>
+    <p class="reveal">I'm always open to new opportunities, freelance projects, or just a friendly chat about data and growth!</p>
+    <div class="contact-links reveal">
+      <a href="mailto:mohamednagiub011@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="https://wa.me/201128275029" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <div class="container">
+    &copy; 2025 Mohamed Nagiub. Built with <i class="fas fa-heart" style="color:#a78bfa; margin:0 4px;"></i> for data.
+  </div>
+</footer>
+
+<!-- ====== MODALS ====== -->
+
+<!-- Excel Dashboard Modal -->
+<div class="modal-overlay" id="dashboardModal">
+  <button class="modal-close" onclick="closeModal('dashboardModal')">&times;</button>
+  <div class="modal-content">
+    <img src="dashboard.png" alt="Excel Sales Dashboard">
+  </div>
+</div>
+
+<!-- Power BI Sales Modal -->
+<div class="modal-overlay" id="powerbiSalesModal">
+  <button class="modal-close" onclick="closeModal('powerbiSalesModal')">&times;</button>
+  <div class="modal-content">
+    <img src="image.png" alt="Sales Report">
+  </div>
+</div>
+
+<!-- Power BI HR Modal (3 صور) -->
+<div class="modal-overlay" id="powerbiHRModal">
+  <button class="modal-close" onclick="closeModal('powerbiHRModal')">&times;</button>
+  <div class="modal-content">
+    <img src="image 1.png" alt="HR Analysis">
+    <img src="image 2.png" alt="Department Analysis">
+    <img src="image 3.png" alt="Employees details">
+  </div>
+</div>
+
+<!-- Power BI E-Commerce Modal (5 صور) -->
+<div class="modal-overlay" id="powerbiEcommerceModal">
+  <button class="modal-close" onclick="closeModal('powerbiEcommerceModal')">&times;</button>
+  <div class="modal-content">
+    <img src="image 4.png" alt="E-commerce store 1">
+    <img src="image 5.png" alt="E-commerce store 2">
+    <img src="image 6.png" alt="E-commerce store 3">
+    <img src="image 7.png" alt="E-commerce store 4">
+    <img src="image 8.png" alt="E-commerce store 5">
+  </div>
+</div>
+
+<!-- Hospital ERD Modal -->
+<div class="modal-overlay" id="hospitalErdModal">
+  <button class="modal-close" onclick="closeModal('hospitalErdModal')">&times;</button>
+  <div class="modal-content">
+    <img src="hospital-erd.png" alt="Hospital ERD">
+  </div>
+</div>
+
+<!-- E-Commerce ERD Modal -->
+<div class="modal-overlay" id="ecommerceErdModal">
+  <button class="modal-close" onclick="closeModal('ecommerceErdModal')">&times;</button>
+  <div class="modal-content">
+    <img src="ecommerce-erd.png" alt="E-Commerce ERD">
+  </div>
+</div>
+
+<!-- ====== SCRIPTS ====== -->
+<script>
+  // Typing Effect
+  const typedText = document.getElementById('typed-text');
+  const words = ['Data Analyst', 'Power BI Developer', 'Social Media Manager', 'Insight Generator', 'Dashboard Designer'];
+  let wordIndex = 0, charIndex = 0, isDeleting = false;
+
+  function typeEffect() {
+    const currentWord = words[wordIndex];
+    if (isDeleting) {
+      typedText.textContent = currentWord.substring(0, charIndex - 1);
+      charIndex--;
+    } else {
+      typedText.textContent = currentWord.substring(0, charIndex + 1);
+      charIndex++;
+    }
+    if (!isDeleting && charIndex === currentWord.length) {
+      isDeleting = true;
+      setTimeout(typeEffect, 2000);
+      return;
+    }
+    if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      setTimeout(typeEffect, 400);
+      return;
+    }
+    setTimeout(typeEffect, isDeleting ? 60 : 100);
+  }
+  typeEffect();
+
+  // Scroll Reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth nav scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Modal Functions
+  function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+  function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      modal.scrollLeft = 0; 
+    }
+  }
+  document.querySelectorAll('.modal-overlay').forEach(modal => {
+    modal.addEventListener('click', function(e) {
+      if (e.target === this) closeModal(this.id);
+    });
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.active').forEach(modal => closeModal(modal.id));
+    }
+  });
+</script>
+
+</body>
+</html>
