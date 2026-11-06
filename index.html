@@ -17,12 +17,11 @@
       transition: all 0.3s ease;
     }
     
-    /* ----- RTL SUPPORT (When Arabic is selected) ----- */
+    /* ----- RTL SUPPORT ----- */
     body.rtl { direction: rtl; text-align: right; }
     body.rtl .nav-links a::after { left: auto; right: 0; }
     body.rtl .section-title::after { left: auto; right: 0; }
     body.rtl .hero-visual .floating-badge { right: auto; left: 5%; }
-    body.rtl .stat-card:hover { transform: translateY(-4px); }
     body.rtl .modal-close { right: auto; left: 20px; }
 
     a { text-decoration: none; color: inherit; }
@@ -169,7 +168,7 @@
     .project-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
     .project-actions .btn { padding: 8px 24px; font-size: 0.9rem; }
 
-    /* ----- CARDS GRID (For SQL & Power BI) ----- */
+    /* ----- CARDS GRID ----- */
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 2rem; }
     .mini-card {
       background: #151a21; border-radius: 24px; border: 1px solid #252b34;
@@ -183,7 +182,7 @@
     .card-badge-pbi { background: #1e232b; border: 1px solid #f2c94c; color: #f2c94c; }
     .card-badge-sql { background: #1e232b; border: 1px solid #a78bfa; color: #a78bfa; }
 
-    /* ----- CONSULTATION SECTION (NEW) ----- */
+    /* ----- CONSULTATION SECTION ----- */
     .consultation { padding: 80px 0; background: #0d0f14; }
     .consult-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
     .consult-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
@@ -191,6 +190,20 @@
     .consult-form {
       background: #151a21; padding: 40px; border-radius: 24px; border: 1px solid #252b34;
     }
+    
+    /* Form Toggle */
+    .form-toggle {
+      display: flex; background: #0d0f14; border-radius: 12px;
+      padding: 6px; margin-bottom: 24px; border: 1px solid #2a2f3a;
+    }
+    .toggle-btn {
+      flex: 1; padding: 10px; background: transparent; border: none;
+      color: #8892a0; font-weight: 600; font-size: 0.95rem;
+      cursor: pointer; border-radius: 8px; transition: 0.3s;
+      font-family: inherit;
+    }
+    .toggle-btn.active { background: #a78bfa; color: #0d0f14; }
+
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; margin-bottom: 8px; color: #c8d0dd; font-weight: 500; }
     .form-control {
@@ -199,6 +212,23 @@
       font-family: inherit; transition: 0.3s;
     }
     .form-control:focus { outline: none; border-color: #a78bfa; box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2); }
+    
+    /* Custom Select Styling */
+    select.form-control {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23a78bfa%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 12px;
+    }
+    body.rtl select.form-control { background-position: left 1rem center; }
+    select.form-control option { background: #0d0f14; color: #fff; }
+
+    /* Extra Fields Animation */
+    #consultation-extra-fields { display: none; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
     .consult-form .btn { width: 100%; }
 
     /* ----- MODAL / LIGHTBOX ----- */
@@ -511,7 +541,7 @@
   </div>
 </section>
 
-<!-- ====== CONSULTATION SECTION (NEW) ====== -->
+<!-- ====== CONSULTATION SECTION ====== -->
 <section class="consultation" id="consultation">
   <div class="container">
     <div class="consult-wrapper">
@@ -523,16 +553,42 @@
       </div>
       
       <form class="consult-form reveal" onsubmit="sendToWhatsApp(event)">
-        <div class="form-group">
-          <label for="cName" data-en="Your Name" data-ar="اسمك">Your Name</label>
-          <input type="text" id="cName" class="form-control" placeholder="Enter your name" data-en-placeholder="Enter your name" data-ar-placeholder="أدخل اسمك" required>
+        
+        <!-- Toggle Buttons -->
+        <div class="form-toggle">
+          <button type="button" id="btn-inquiry" class="toggle-btn active" onclick="setFormMode('inquiry')">Inquiry / استفسار</button>
+          <button type="button" id="btn-consultation" class="toggle-btn" onclick="setFormMode('consultation')">Consultation / استشارة</button>
         </div>
+
         <div class="form-group">
-          <label for="cProject" data-en="Project Details / Inquiry" data-ar="تفاصيل المشروع / الاستفسار">Project Details / Inquiry</label>
-          <textarea id="cProject" class="form-control" rows="4" placeholder="How can I help you?" data-en-placeholder="How can I help you?" data-ar-placeholder="كيف يمكنني مساعدتك؟" required></textarea>
+          <label for="cName" id="lbl-name">Your Name</label>
+          <input type="text" id="cName" class="form-control" required>
         </div>
+
+        <!-- Extra Fields for Consultation Only (Hidden by default) -->
+        <div id="consultation-extra-fields">
+          <div class="form-group">
+            <label for="cService" id="lbl-service">Service Needed</label>
+            <select id="cService" class="form-control">
+              <option value="Data Analysis" data-en="Data Analysis & BI" data-ar="تحليل البيانات وذكاء الأعمال">Data Analysis & BI</option>
+              <option value="Social Media" data-en="Social Media Management" data-ar="إدارة السوشيال ميديا">Social Media Management</option>
+              <option value="Paid Ads" data-en="Paid Advertising" data-ar="الإعلانات المدفوعة">Paid Advertising</option>
+              <option value="Educational" data-en="Educational Solutions" data-ar="الحلول التعليمية">Educational Solutions</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cBusiness" id="lbl-business">Your Business / Industry</label>
+            <input type="text" id="cBusiness" class="form-control" data-en-placeholder="e.g., E-commerce, Education, Tech..." data-ar-placeholder="مثال: تجارة إلكترونية، تعليم، تكنولوجيا...">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cProject" id="lbl-details">Project Details</label>
+          <textarea id="cProject" class="form-control" rows="4" required></textarea>
+        </div>
+
         <button type="submit" class="btn btn-primary">
-          <i class="fab fa-whatsapp"></i> <span data-en="Send via WhatsApp" data-ar="إرسال عبر واتساب">Send via WhatsApp</span>
+          <i class="fab fa-whatsapp"></i> <span id="btn-submit-text">Send</span>
         </button>
       </form>
     </div>
@@ -550,7 +606,8 @@
       <a href="mailto:mohamednagiub011@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
       <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
       <a href="https://github.com/Mohamed077-n" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <a href="https://wa.me/201128275029" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <!-- تم تحديث رقم الواتساب هنا -->
+      <a href="https://wa.me/201272137273" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
   </div>
 </section>
@@ -623,10 +680,14 @@
 <!-- ====== SCRIPTS ====== -->
 <script>
   // ==========================================
-  // 1. LANGUAGE TOGGLE (BILINGUAL SYSTEM)
+  // STATE VARIABLES
   // ==========================================
-  let currentLang = 'en'; // Default language
+  let currentLang = 'en'; 
+  let formMode = 'inquiry'; 
 
+  // ==========================================
+  // 1. LANGUAGE TOGGLE
+  // ==========================================
   function toggleLanguage() {
     currentLang = currentLang === 'en' ? 'ar' : 'en';
     const toggleBtn = document.getElementById('langToggle');
@@ -641,36 +702,113 @@
       toggleBtn.innerText = 'AR / EN';
     }
 
-    // Translate all elements with data-en and data-ar
     document.querySelectorAll('[data-en]').forEach(el => {
       el.innerHTML = el.getAttribute('data-' + currentLang);
     });
 
-    // Translate placeholders
     document.querySelectorAll('[data-en-placeholder]').forEach(el => {
       el.setAttribute('placeholder', el.getAttribute(`data-${currentLang}-placeholder`));
     });
+
+    updateFormTexts();
   }
 
   // ==========================================
-  // 2. CONSULTATION FORM TO WHATSAPP
+  // 2. FORM MODE TOGGLE
+  // ==========================================
+  function setFormMode(mode) {
+    formMode = mode;
+    
+    document.getElementById('btn-inquiry').classList.toggle('active', mode === 'inquiry');
+    document.getElementById('btn-consultation').classList.toggle('active', mode === 'consultation');
+    
+    const extraFields = document.getElementById('consultation-extra-fields');
+    if (mode === 'consultation') {
+      extraFields.style.display = 'block';
+      document.getElementById('cBusiness').required = true; 
+    } else {
+      extraFields.style.display = 'none';
+      document.getElementById('cBusiness').required = false;
+      document.getElementById('cBusiness').value = ''; 
+    }
+    
+    updateFormTexts();
+  }
+
+  function updateFormTexts() {
+    const isEn = currentLang === 'en';
+    
+    const texts = {
+      inquiry: {
+        btnInq: isEn ? 'Inquiry' : 'استفسار',
+        btnCons: isEn ? 'Consultation' : 'استشارة',
+        nameLabel: isEn ? 'Your Name' : 'اسمك',
+        namePlaceholder: isEn ? 'Enter your name' : 'أدخل اسمك',
+        detailsLabel: isEn ? 'Your Question / Inquiry' : 'سؤالك / موضوع الاستفسار',
+        detailsPlaceholder: isEn ? 'What would you like to ask about?' : 'عن ماذا تريد أن تسأل؟',
+        submitBtn: isEn ? 'Send Inquiry via WhatsApp' : 'إرسال الاستفسار عبر واتساب'
+      },
+      consultation: {
+        btnInq: isEn ? 'Inquiry' : 'استفسار',
+        btnCons: isEn ? 'Consultation' : 'استشارة',
+        nameLabel: isEn ? 'Your Name' : 'اسمك',
+        namePlaceholder: isEn ? 'Enter your name' : 'أدخل اسمك',
+        detailsLabel: isEn ? 'Additional Project Details' : 'تفاصيل إضافية عن المشروع',
+        detailsPlaceholder: isEn ? 'Tell me more about what you need...' : 'أخبرني المزيد عما تحتاجه...',
+        submitBtn: isEn ? 'Book Consultation via WhatsApp' : 'احجز استشارة عبر واتساب'
+      }
+    };
+
+    const t = texts[formMode];
+    
+    document.getElementById('btn-inquiry').innerText = t.btnInq;
+    document.getElementById('btn-consultation').innerText = t.btnCons;
+    document.getElementById('lbl-name').innerText = t.nameLabel;
+    document.getElementById('cName').setAttribute('placeholder', t.namePlaceholder);
+    document.getElementById('lbl-details').innerText = t.detailsLabel;
+    document.getElementById('cProject').setAttribute('placeholder', t.detailsPlaceholder);
+    document.getElementById('btn-submit-text').innerText = t.submitBtn;
+
+    document.getElementById('lbl-service').innerText = isEn ? 'Service Needed' : 'الخدمة المطلوبة';
+    document.getElementById('lbl-business').innerText = isEn ? 'Your Business / Industry' : 'مجال عملك / شركتك';
+  }
+
+  // ==========================================
+  // 3. SEND TO WHATSAPP
   // ==========================================
   function sendToWhatsApp(e) {
     e.preventDefault();
     const name = document.getElementById('cName').value;
     const project = document.getElementById('cProject').value;
-    const phone = '201128275029'; // Your WhatsApp Number
+    // تم تحديث رقم الواتساب هنا أيضاً
+    const phone = '201272137273'; 
     
-    // Create the message based on current language
-    const msg = currentLang === 'en' 
-      ? `Hello Mohamed, my name is ${name}. I need a consultation regarding: ${project}`
-      : `مرحباً محمد، اسمي ${name}. أحتاج استشارة بخصوص: ${project}`;
+    let msg = '';
+    
+    if (currentLang === 'en') {
+      if (formMode === 'inquiry') {
+        msg = `Hello Mohamed, my name is ${name}. I have an inquiry: ${project}`;
+      } else {
+        const service = document.getElementById('cService').value;
+        const business = document.getElementById('cBusiness').value;
+        msg = `Hello Mohamed, my name is ${name}.\nI would like to book a consultation.\nService Needed: ${service}\nMy Business: ${business}\nDetails: ${project}`;
+      }
+    } else {
+      if (formMode === 'inquiry') {
+        msg = `مرحباً محمد، اسمي ${name}. لدي استفسار بخصوص: ${project}`;
+      } else {
+        const serviceSelect = document.getElementById('cService');
+        const serviceAr = serviceSelect.options[serviceSelect.selectedIndex].getAttribute('data-ar');
+        const business = document.getElementById('cBusiness').value;
+        msg = `مرحباً محمد، اسمي ${name}.\nأرغب في حجز استشارة.\nالخدمة المطلوبة: ${serviceAr}\nمجال عملي: ${business}\nتفاصيل إضافية: ${project}`;
+      }
+    }
       
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   // ==========================================
-  // 3. TYPING EFFECT
+  // 4. TYPING EFFECT
   // ==========================================
   const typedText = document.getElementById('typed-text');
   const words = ['Data Analyst', 'Power BI Developer', 'Social Media Manager', 'Insight Generator', 'Dashboard Designer'];
@@ -701,7 +839,7 @@
   typeEffect();
 
   // ==========================================
-  // 4. SCROLL REVEAL ANIMATIONS
+  // 5. SCROLL REVEAL ANIMATIONS
   // ==========================================
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
@@ -712,7 +850,7 @@
   reveals.forEach(el => observer.observe(el));
 
   // ==========================================
-  // 5. SMOOTH NAV SCROLL
+  // 6. SMOOTH NAV SCROLL
   // ==========================================
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -723,7 +861,7 @@
   });
 
   // ==========================================
-  // 6. MODAL FUNCTIONS
+  // 7. MODAL FUNCTIONS
   // ==========================================
   function openModal(modalId) {
     const modal = document.getElementById(modalId);
@@ -750,6 +888,9 @@
       document.querySelectorAll('.modal-overlay.active').forEach(modal => closeModal(modal.id));
     }
   });
+
+  // Initialize form texts on load
+  updateFormTexts();
 </script>
 
 </body>
