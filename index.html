@@ -14,7 +14,17 @@
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       line-height: 1.6;
       scroll-behavior: smooth;
+      transition: all 0.3s ease;
     }
+    
+    /* ----- RTL SUPPORT (When Arabic is selected) ----- */
+    body.rtl { direction: rtl; text-align: right; }
+    body.rtl .nav-links a::after { left: auto; right: 0; }
+    body.rtl .section-title::after { left: auto; right: 0; }
+    body.rtl .hero-visual .floating-badge { right: auto; left: 5%; }
+    body.rtl .stat-card:hover { transform: translateY(-4px); }
+    body.rtl .modal-close { right: auto; left: 20px; }
+
     a { text-decoration: none; color: inherit; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
@@ -39,8 +49,8 @@
       background: rgba(13, 15, 20, 0.85); backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255,255,255,0.05); padding: 14px 0;
     }
-    .nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; font-weight: 500; }
+    .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; font-weight: 500; align-items: center; margin: 0 auto; }
     .nav-links a { font-size: 1rem; transition: color 0.2s; position: relative; }
     .nav-links a::after {
       content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
@@ -48,6 +58,13 @@
     }
     .nav-links a:hover { color: #a78bfa; }
     .nav-links a:hover::after { width: 100%; }
+    
+    .lang-btn {
+      background: #1e232b; border: 1px solid #a78bfa; color: #a78bfa;
+      padding: 6px 16px; border-radius: 20px; cursor: pointer;
+      font-weight: bold; font-size: 0.9rem; transition: 0.3s;
+    }
+    .lang-btn:hover { background: #a78bfa; color: #0d0f14; }
 
     /* ----- HERO ----- */
     .hero { min-height: 90vh; display: flex; align-items: center; padding: 40px 0; }
@@ -112,9 +129,7 @@
 
     /* ----- SERVICES ----- */
     .services { padding: 80px 0; background: #0d0f14; }
-    .services-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;
-    }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
     .service-card {
       background: #151a21; border-radius: 20px; padding: 30px;
       border: 1px solid #252b34; transition: transform 0.3s, border-color 0.3s;
@@ -151,16 +166,46 @@
       background: #0d0f14; padding: 4px 14px; border-radius: 40px;
       font-size: 0.8rem; border: 1px solid #2a2f3a; color: #a0aab8;
     }
-
     .project-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
     .project-actions .btn { padding: 8px 24px; font-size: 0.9rem; }
+
+    /* ----- CARDS GRID (For SQL & Power BI) ----- */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 2rem; }
+    .mini-card {
+      background: #151a21; border-radius: 24px; border: 1px solid #252b34;
+      padding: 24px 28px; transition: transform 0.3s, border-color 0.3s;
+      display: flex; flex-direction: column;
+    }
+    .mini-card:hover { transform: translateY(-6px); border-color: #6c8cff; }
+    .mini-card h4 { font-size: 1.2rem; margin-bottom: 8px; }
+    .mini-card p { color: #b8c0cc; font-size: 0.95rem; margin-bottom: 16px; flex-grow: 1; }
+    .mini-card .project-tech { margin-bottom: 16px; }
+    .card-badge-pbi { background: #1e232b; border: 1px solid #f2c94c; color: #f2c94c; }
+    .card-badge-sql { background: #1e232b; border: 1px solid #a78bfa; color: #a78bfa; }
+
+    /* ----- CONSULTATION SECTION (NEW) ----- */
+    .consultation { padding: 80px 0; background: #0d0f14; }
+    .consult-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .consult-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+    .consult-text p { color: #b8c0cc; font-size: 1.1rem; margin-bottom: 2rem; }
+    .consult-form {
+      background: #151a21; padding: 40px; border-radius: 24px; border: 1px solid #252b34;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; color: #c8d0dd; font-weight: 500; }
+    .form-control {
+      width: 100%; padding: 12px 16px; border-radius: 12px;
+      background: #0d0f14; border: 1px solid #2a2f3a; color: #fff;
+      font-family: inherit; transition: 0.3s;
+    }
+    .form-control:focus { outline: none; border-color: #a78bfa; box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2); }
+    .consult-form .btn { width: 100%; }
 
     /* ----- MODAL / LIGHTBOX ----- */
     .modal-overlay {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.95); z-index: 1000;
-      justify-content: flex-start; align-items: center; overflow-x: auto; padding: 40px;
-      gap: 20px;
+      justify-content: flex-start; align-items: center; overflow-x: auto; padding: 40px; gap: 20px;
     }
     .modal-overlay.active { display: flex; }
     .modal-content { display: flex; gap: 20px; align-items: center; margin: 0 auto; }
@@ -182,57 +227,32 @@
     .modal-overlay::-webkit-scrollbar-thumb { background: #2a2f3a; border-radius: 10px; }
     .modal-overlay::-webkit-scrollbar-thumb:hover { background: #a78bfa; }
 
-    /* ----- CARDS GRID (For SQL & Power BI) ----- */
-    .cards-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem; margin-top: 2rem;
-    }
-    .mini-card {
-      background: #151a21; border-radius: 24px; border: 1px solid #252b34;
-      padding: 24px 28px; transition: transform 0.3s, border-color 0.3s;
-      display: flex; flex-direction: column;
-    }
-    .mini-card:hover { transform: translateY(-6px); border-color: #6c8cff; }
-    .mini-card h4 { font-size: 1.2rem; margin-bottom: 8px; }
-    .mini-card p { color: #b8c0cc; font-size: 0.95rem; margin-bottom: 16px; flex-grow: 1; }
-    .mini-card .project-tech { margin-bottom: 16px; }
-    
-    .card-badge-pbi { background: #1e232b; border: 1px solid #f2c94c; color: #f2c94c; }
-    .card-badge-sql { background: #1e232b; border: 1px solid #a78bfa; color: #a78bfa; }
-
     /* ----- CONTACT ----- */
-    .contact { padding: 80px 0; background: #0d0f14; }
+    .contact { padding: 80px 0; background: #11151b; }
     .contact-wrapper { display: flex; flex-direction: column; align-items: center; text-align: center; }
     .contact-wrapper p { color: #b8c0cc; max-width: 500px; margin-bottom: 2rem; }
     .contact-links { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; }
-    .contact-links a {
-      font-size: 1.8rem; color: #8892a0;
-      transition: color 0.2s, transform 0.2s;
-    }
+    .contact-links a { font-size: 1.8rem; color: #8892a0; transition: color 0.2s, transform 0.2s; }
     .contact-links a:hover { color: #a78bfa; transform: scale(1.1); }
 
     /* ----- FOOTER ----- */
-    footer {
-      padding: 32px 0; border-top: 1px solid #1e232b;
-      text-align: center; color: #5a6475; font-size: 0.9rem;
-    }
+    footer { padding: 32px 0; border-top: 1px solid #1e232b; text-align: center; color: #5a6475; font-size: 0.9rem; }
 
     /* ----- RESPONSIVE ----- */
     @media (max-width: 900px) {
-      .hero-grid { grid-template-columns: 1fr; text-align: center; }
-      .hero-content h1 { font-size: 2.6rem; }
-      .hero-sub { margin: 0 auto 1.5rem; }
+      .nav { justify-content: center; }
+      .hero-grid, .about-grid, .consult-wrapper { grid-template-columns: 1fr; text-align: center; }
+      .hero-content h1, .consult-text h2 { font-size: 2.6rem; }
+      .hero-sub, .consult-text p { margin: 0 auto 1.5rem; }
       .btn-group { justify-content: center; }
-      .about-grid { grid-template-columns: 1fr; }
       .about-stats { grid-template-columns: 1fr 1fr; }
       .typing-wrapper { min-height: auto; }
       .hero-visual .placeholder-icon { font-size: 8rem; padding: 24px; }
+      .consult-form { padding: 24px; }
     }
-
     @media (max-width: 600px) {
-      .nav-links { gap: 1rem; font-size: 0.9rem; }
-      .hero-content h1 { font-size: 2rem; }
-      .section-title { font-size: 1.8rem; }
+      .nav-links { gap: 1rem; font-size: 0.9rem; flex-wrap: wrap; justify-content: center; }
+      .hero-content h1, .section-title { font-size: 2rem; }
       .project-header { flex-direction: column; }
       .modal-content img { height: 70vh; }
       .modal-overlay { padding: 10px; }
@@ -245,11 +265,13 @@
 <header>
   <div class="container nav">
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#about" data-en="About" data-ar="عني">About</a></li>
+      <li><a href="#services" data-en="Services" data-ar="الخدمات">Services</a></li>
+      <li><a href="#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
+      <li><a href="#consultation" data-en="Consultation" data-ar="الاستشارات">Consultation</a></li>
+      <li><a href="#contact" data-en="Contact" data-ar="تواصل معي">Contact</a></li>
     </ul>
+    <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">AR / EN</button>
   </div>
 </header>
 
@@ -257,17 +279,17 @@
 <section class="hero" id="home">
   <div class="container hero-grid">
     <div class="hero-content">
-      <h1>Hi, I'm <span class="highlight">Mohamed Nagiub</span></h1>
+      <h1><span data-en="Hi, I'm" data-ar="أهلاً بك، أنا">Hi, I'm</span> <span class="highlight">Mohamed Nagiub</span></h1>
       <div class="typing-wrapper">
         <i class="fas fa-code" style="margin-right:8px; color:#a78bfa;"></i>
         <span id="typed-text"></span>
       </div>
-      <p class="hero-sub">
+      <p class="hero-sub" data-en="Data Analyst & Social Media Manager | Turning raw data into actionable insights and driving growth through data-driven strategies." data-ar="محلل بيانات ومدير سوشيال ميديا | أحول البيانات الخام إلى رؤى قابلة للتنفيذ وأقود النمو من خلال استراتيجيات مبنية على البيانات.">
         Data Analyst & Social Media Manager | Turning raw data into actionable insights and driving growth through data-driven strategies.
       </p>
       <div class="btn-group">
-        <a href="#projects" class="btn btn-primary">View Projects</a>
-        <a href="#contact" class="btn btn-outline">Contact Me</a>
+        <a href="#projects" class="btn btn-primary" data-en="View Projects" data-ar="عرض المشاريع">View Projects</a>
+        <a href="#contact" class="btn btn-outline" data-en="Contact Me" data-ar="تواصل معي">Contact Me</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -276,7 +298,7 @@
       </div>
       <div class="floating-badge">
         <i class="fas fa-database" style="color:#a78bfa;"></i>
-        <span>Data Analyst</span>
+        <span data-en="Data Analyst" data-ar="محلل بيانات">Data Analyst</span>
       </div>
     </div>
   </div>
@@ -285,44 +307,44 @@
 <!-- ====== ABOUT ====== -->
 <section class="about" id="about">
   <div class="container">
-    <h2 class="section-title reveal">About Me</h2>
+    <h2 class="section-title reveal" data-en="About Me" data-ar="نبذة عني">About Me</h2>
     <div class="about-grid">
       <div class="about-text reveal">
-        <p>
-          A recent Computer Technology graduate equipped with strong data analytical skills and a proven ability to collect, process, and interpret complex datasets effectively. I specialize in transforming raw data into actionable insights to support decision-making, with a specific interest in the Education, Automotive, and E-commerce sectors.
+        <p data-en="A recent Computer Technology graduate equipped with strong data analytical skills and a proven ability to collect, process, and interpret complex datasets effectively. I specialize in transforming raw data into actionable insights to support decision-making, with a specific interest in the Education, Automotive, and E-commerce sectors." data-ar="خريج حديث من تكنولوجيا الكمبيوتر، أمتلك مهارات قوية في تحليل البيانات وقدرة مثبتة على جمع ومعالجة وتفسير مجموعات البيانات المعقدة بفعالية. أتخصص في تحويل البيانات الخام إلى رؤى قابلة للتنفيذ لدعم اتخاذ القرارات، مع اهتمام خاص بقطاعات التعليم، السيارات، والتجارة الإلكترونية.">
+          A recent Computer Technology graduate equipped with strong data analytical skills...
         </p>
-        <p>
-          Beyond data analysis, I have hands-on experience in team leadership, project management, and analyzing user behavior patterns. I also have a solid foundation in UI/UX design and leverage AI tools for task automation and creative problem-solving.
+        <p data-en="Beyond data analysis, I have hands-on experience in team leadership, project management, and analyzing user behavior patterns. I also have a solid foundation in UI/UX design and leverage AI tools for task automation and creative problem-solving." data-ar="إلى جانب تحليل البيانات، لدي خبرة عملية في قيادة الفرق، إدارة المشاريع، وتحليل أنماط سلوك المستخدمين. كما أمتلك أساساً قوياً في تصميم واجهات المستخدم (UI/UX) وأستفيد من أدوات الذكاء الاصطناعي لأتمتة المهام وحل المشكلات بطرق إبداعية.">
+          Beyond data analysis, I have hands-on experience in team leadership...
         </p>
-        <p>
-          I also work as a Social Media Manager, helping brands and educational entities grow by building data-backed strategies, managing paid ad campaigns, and optimizing digital presence.
+        <p data-en="I also work as a Social Media Manager, helping brands and educational entities grow by building data-backed strategies, managing paid ad campaigns, and optimizing digital presence." data-ar="أعمل أيضاً كمدير لوسائل التواصل الاجتماعي، حيث أساعد العلامات التجارية والكيانات التعليمية على النمو من خلال بناء استراتيجيات مدعومة بالبيانات، إدارة الحملات الإعلانية المدفوعة، وتحسين التواجد الرقمي.">
+          I also work as a Social Media Manager, helping brands...
         </p>
         <div class="skill-tags">
           <span class="skill-tag">Power BI</span>
           <span class="skill-tag">SQL</span>
           <span class="skill-tag">Excel</span>
-          <span class="skill-tag">Social Media Management</span>
-          <span class="skill-tag">Paid Ads (Meta & TikTok)</span>
-          <span class="skill-tag">Data Visualization</span>
+          <span class="skill-tag" data-en="Social Media Management" data-ar="إدارة السوشيال ميديا">Social Media Management</span>
+          <span class="skill-tag" data-en="Paid Ads (Meta & TikTok)" data-ar="الإعلانات الممولة (ميتا وتيك توك)">Paid Ads (Meta & TikTok)</span>
+          <span class="skill-tag" data-en="Data Visualization" data-ar="تصوير البيانات">Data Visualization</span>
           <span class="skill-tag">UI/UX</span>
         </div>
       </div>
       <div class="about-stats reveal">
         <div class="stat-card">
           <div class="stat-number">5+</div>
-          <div class="stat-label">Projects Completed</div>
+          <div class="stat-label" data-en="Projects Completed" data-ar="مشاريع مكتملة">Projects Completed</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">10k+</div>
-          <div class="stat-label">Data Rows Processed</div>
+          <div class="stat-label" data-en="Data Rows Processed" data-ar="صفوف بيانات تمت معالجتها">Data Rows Processed</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">3</div>
-          <div class="stat-label">Sectors Explored</div>
+          <div class="stat-label" data-en="Sectors Explored" data-ar="قطاعات تم استكشافها">Sectors Explored</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">100%</div>
-          <div class="stat-label">Client Satisfaction</div>
+          <div class="stat-label" data-en="Client Satisfaction" data-ar="رضا العملاء">Client Satisfaction</div>
         </div>
       </div>
     </div>
@@ -332,35 +354,39 @@
 <!-- ====== SERVICES ====== -->
 <section class="services" id="services">
   <div class="container">
-    <h2 class="section-title reveal">Services & Expertise</h2>
+    <h2 class="section-title reveal" data-en="Services & Expertise" data-ar="الخدمات والخبرات">Services & Expertise</h2>
     <div class="services-grid">
       
-      <!-- Service 1 -->
       <div class="service-card reveal">
         <div class="service-icon"><i class="fab fa-facebook-f"></i></div>
-        <h3>Social Media Management</h3>
-        <p>Managing Facebook, Instagram, and TikTok pages professionally. Creating content plans, increasing real engagement, and building sustainable growth strategies based on performance analysis.</p>
+        <h3 data-en="Social Media Management" data-ar="إدارة السوشيال ميديا">Social Media Management</h3>
+        <p data-en="Managing Facebook, Instagram, and TikTok pages professionally. Creating content plans, increasing real engagement, and building sustainable growth strategies based on performance analysis." data-ar="إدارة احترافية لصفحات فيسبوك، إنستجرام، وتيك توك. إعداد خطط محتوى، زيادة التفاعل الحقيقي، وبناء استراتيجيات نمو مستدامة بناءً على تحليل الأداء.">
+          Managing Facebook, Instagram, and TikTok pages professionally...
+        </p>
       </div>
 
-      <!-- Service 2 -->
       <div class="service-card reveal">
         <div class="service-icon"><i class="fas fa-bullhorn"></i></div>
-        <h3>Paid Advertising</h3>
-        <p>Creating and managing targeted ad campaigns on Meta and TikTok. Focused on precise audience targeting and continuous optimization to achieve the highest Return on Ad Spend (ROAS).</p>
+        <h3 data-en="Paid Advertising" data-ar="الإعلانات المدفوعة">Paid Advertising</h3>
+        <p data-en="Creating and managing targeted ad campaigns on Meta and TikTok. Focused on precise audience targeting and continuous optimization to achieve the highest Return on Ad Spend (ROAS)." data-ar="إنشاء وإدارة حملات إعلانية موجهة على ميتا وتيك توك. التركيز على الاستهداف الدقيق للجمهور والتحسين المستمر لتحقيق أعلى عائد على الإنفاق الإعلاني (ROAS).">
+          Creating and managing targeted ad campaigns...
+        </p>
       </div>
 
-      <!-- Service 3 -->
       <div class="service-card reveal">
         <div class="service-icon"><i class="fas fa-chart-pie"></i></div>
-        <h3>Data Analysis & Business Dev.</h3>
-        <p>Using data to uncover gaps, understand user behavior, and provide actionable recommendations. Helping businesses make informed decisions to improve sales and engagement.</p>
+        <h3 data-en="Data Analysis & Business Dev." data-ar="تحليل البيانات وتطوير الأعمال">Data Analysis & Business Dev.</h3>
+        <p data-en="Using data to uncover gaps, understand user behavior, and provide actionable recommendations. Helping businesses make informed decisions to improve sales and engagement." data-ar="استخدام البيانات لاكتشاف الفجوات، فهم سلوك المستخدم، وتقديم توصيات عملية. مساعدة الشركات على اتخاذ قرارات مدروسة لتحسين المبيعات والتفاعل.">
+          Using data to uncover gaps, understand user behavior...
+        </p>
       </div>
 
-      <!-- Service 4 -->
       <div class="service-card reveal">
         <div class="service-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-        <h3>Educational Solutions</h3>
-        <p>Digital solutions for teachers, schools, and academies. Streamlining online platforms, managing student data efficiently, preparing e-exams, and generating performance reports.</p>
+        <h3 data-en="Educational Solutions" data-ar="الحلول التعليمية">Educational Solutions</h3>
+        <p data-en="Digital solutions for teachers, schools, and academies. Streamlining online platforms, managing student data efficiently, preparing e-exams, and generating performance reports." data-ar="حلول رقمية للمدرسين والمدارس والأكاديميات. تنظيم المنصات الإلكترونية، إدارة بيانات الطلاب بكفاءة، إعداد الاختبارات الإلكترونية، وإنشاء تقارير الأداء.">
+          Digital solutions for teachers, schools, and academies...
+        </p>
       </div>
 
     </div>
@@ -370,108 +396,114 @@
 <!-- ====== PROJECTS ====== -->
 <section class="projects" id="projects">
   <div class="container">
-    <h2 class="section-title reveal">Featured Projects</h2>
+    <h2 class="section-title reveal" data-en="Featured Projects" data-ar="أبرز المشاريع">Featured Projects</h2>
 
     <!-- 1. Excel Sales Dashboard -->
     <div class="project-card reveal">
       <div class="project-header">
-        <h3>Sales Analysis Dashboard (Excel)</h3>
-        <span class="project-badge"><i class="fas fa-chart-pie"></i> Data Analytics</span>
+        <h3 data-en="Sales Analysis Dashboard (Excel)" data-ar="لوحة تحليل المبيعات (إكسيل)">Sales Analysis Dashboard (Excel)</h3>
+        <span class="project-badge"><i class="fas fa-chart-pie"></i> <span data-en="Data Analytics" data-ar="تحليل بيانات">Data Analytics</span></span>
       </div>
       <div class="project-body">
-        <p>
-          A comprehensive sales analysis project built from a raw dataset. Cleaned, structured, and extracted meaningful insights to identify trends, optimize shipping modes, and improve order priority decisions.
+        <p data-en="A comprehensive sales analysis project built from a raw dataset. Cleaned, structured, and extracted meaningful insights to identify trends, optimize shipping modes, and improve order priority decisions." data-ar="مشروع شامل لتحليل المبيعات تم بناؤه من مجموعة بيانات خام. تم تنظيف البيانات وهيكلتها واستخراج رؤى قيمة لتحديد الاتجاهات، تحسين طرق الشحن، وتحسين قرارات أولوية الطلبات.">
+          A comprehensive sales analysis project built from a raw dataset...
         </p>
         <div class="project-tech">
-          <span>Excel</span><span>Data Cleaning</span><span>Pivot Tables</span><span>Dashboard Design</span>
+          <span>Excel</span><span data-en="Data Cleaning" data-ar="تنظيف البيانات">Data Cleaning</span><span data-en="Pivot Tables" data-ar="الجداول المحورية">Pivot Tables</span><span data-en="Dashboard Design" data-ar="تصميم لوحة القيادة">Dashboard Design</span>
         </div>
         <div class="project-actions">
           <a href="javascript:void(0)" class="btn btn-primary" style="padding:8px 24px; font-size:0.9rem;" onclick="openModal('dashboardModal')">
-            <i class="fas fa-eye"></i> View Dashboard
+            <i class="fas fa-eye"></i> <span data-en="View Dashboard" data-ar="عرض اللوحة">View Dashboard</span>
           </a>
           <a href="#" class="btn btn-outline" style="padding:8px 24px; font-size:0.9rem;">
-            <i class="fab fa-github"></i> Source Code
+            <i class="fab fa-github"></i> <span data-en="Source Code" data-ar="الكود المصدري">Source Code</span>
           </a>
         </div>
       </div>
     </div>
 
     <!-- 2. Power BI Projects -->
-    <h3 class="reveal" style="margin-top: 3rem; margin-bottom: 1rem; color: #a78bfa; font-size: 1.5rem;">Power BI Dashboards</h3>
+    <h3 class="reveal" style="margin-top: 3rem; margin-bottom: 1rem; color: #a78bfa; font-size: 1.5rem;" data-en="Power BI Dashboards" data-ar="لوحات Power BI">Power BI Dashboards</h3>
     <div class="cards-grid">
       <!-- Sales Report -->
       <div class="mini-card reveal">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:8px;">
-          <h4>Sales Report</h4>
+          <h4 data-en="Sales Report" data-ar="تقرير المبيعات">Sales Report</h4>
           <span class="project-badge card-badge-pbi" style="font-size:0.7rem;"><i class="fas fa-chart-line"></i> Power BI</span>
         </div>
-        <p>Interactive dashboard tracking 31K orders, 171M total sales, and 295 products across regions (Southwest, Canada, Northwest) and categories.</p>
-        <div class="project-tech"><span>Power BI</span><span>Data Modeling</span></div>
+        <p data-en="Interactive dashboard tracking 31K orders, 171M total sales, and 295 products across regions (Southwest, Canada, Northwest) and categories." data-ar="لوحة تفاعلية تتابع 31 ألف طلب، 171 مليون إجمالي المبيعات، و295 منتجاً عبر المناطق (الجنوب الغربي، كندا، الشمال الغربي) والفئات.">
+          Interactive dashboard tracking 31K orders...
+        </p>
+        <div class="project-tech"><span>Power BI</span><span data-en="Data Modeling" data-ar="نمذجة البيانات">Data Modeling</span></div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('powerbiSalesModal')"><i class="fas fa-eye"></i> View Dashboard</a>
-          <a href="#" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fas fa-external-link-alt"></i> Live Report</a>
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('powerbiSalesModal')"><i class="fas fa-eye"></i> <span data-en="View Dashboard" data-ar="عرض اللوحة">View Dashboard</span></a>
+          <a href="#" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fas fa-external-link-alt"></i> <span data-en="Live Report" data-ar="التقرير المباشر">Live Report</span></a>
         </div>
       </div>
 
       <!-- HR Analysis -->
       <div class="mini-card reveal">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:8px;">
-          <h4>HR Analysis</h4>
+          <h4 data-en="HR Analysis" data-ar="تحليل الموارد البشرية">HR Analysis</h4>
           <span class="project-badge card-badge-pbi" style="font-size:0.7rem;"><i class="fas fa-users"></i> Power BI</span>
         </div>
-        <p>HR dashboard tracking 89 employees, AVG age 30, AVG salary $7.8K, performance by department, and gender distribution across years.</p>
-        <div class="project-tech"><span>Power BI</span><span>HR Metrics</span></div>
+        <p data-en="HR dashboard tracking 89 employees, AVG age 30, AVG salary $7.8K, performance by department, and gender distribution across years." data-ar="لوحة موارد بشرية تتابع 89 موظفاً، متوسط العمر 30، متوسط الراتب 7.8 ألف دولار، الأداء حسب القسم، وتوزيع الجنسين عبر السنوات.">
+          HR dashboard tracking 89 employees...
+        </p>
+        <div class="project-tech"><span>Power BI</span><span data-en="HR Metrics" data-ar="مؤشرات الموارد البشرية">HR Metrics</span></div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('powerbiHRModal')"><i class="fas fa-eye"></i> View Dashboard</a>
-          <a href="#" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fas fa-external-link-alt"></i> Live Report</a>
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('powerbiHRModal')"><i class="fas fa-eye"></i> <span data-en="View Dashboard" data-ar="عرض اللوحة">View Dashboard</span></a>
+          <a href="#" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fas fa-external-link-alt"></i> <span data-en="Live Report" data-ar="التقرير المباشر">Live Report</span></a>
         </div>
       </div>
 
       <!-- E-Commerce Dashboard -->
       <div class="mini-card reveal">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:8px;">
-          <h4>E-Commerce Store</h4>
+          <h4 data-en="E-Commerce Store" data-ar="المتجر الإلكتروني">E-Commerce Store</h4>
           <span class="project-badge card-badge-pbi" style="font-size:0.7rem;"><i class="fas fa-shopping-cart"></i> Power BI</span>
         </div>
-        <p>E-commerce dashboard analyzing 10K orders, 70M total sales, AOV 7.0K, customer segmentation (Consumer/Corporate), and loyalty statuses.</p>
-        <div class="project-tech"><span>Power BI</span><span>Customer Segmentation</span></div>
+        <p data-en="E-commerce dashboard analyzing 10K orders, 70M total sales, AOV 7.0K, customer segmentation (Consumer/Corporate), and loyalty statuses." data-ar="لوحة تجارة إلكترونية تحلل 10 آلاف طلب، 70 مليون إجمالي المبيعات، متوسط قيمة الطلب 7 آلاف، تقسيم العملاء (أفراد/شركات)، وحالات الولاء.">
+          E-commerce dashboard analyzing 10K orders...
+        </p>
+        <div class="project-tech"><span>Power BI</span><span data-en="Customer Segmentation" data-ar="تقسيم العملاء">Customer Segmentation</span></div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('powerbiEcommerceModal')"><i class="fas fa-eye"></i> View Dashboard</a>
-          <a href="#" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fas fa-external-link-alt"></i> Live Report</a>
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('powerbiEcommerceModal')"><i class="fas fa-eye"></i> <span data-en="View Dashboard" data-ar="عرض اللوحة">View Dashboard</span></a>
+          <a href="#" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fas fa-external-link-alt"></i> <span data-en="Live Report" data-ar="التقرير المباشر">Live Report</span></a>
         </div>
       </div>
     </div>
 
     <!-- 3. SQL Projects -->
-    <h3 class="reveal" style="margin-top: 3rem; margin-bottom: 1rem; color: #a78bfa; font-size: 1.5rem;">SQL Database Design</h3>
+    <h3 class="reveal" style="margin-top: 3rem; margin-bottom: 1rem; color: #a78bfa; font-size: 1.5rem;" data-en="SQL Database Design" data-ar="تصميم قواعد بيانات SQL">SQL Database Design</h3>
     <div class="cards-grid">
       <div class="mini-card reveal">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:8px;">
-          <h4>Hospital DB Schema</h4>
+          <h4 data-en="Hospital DB Schema" data-ar="مخطط قاعدة بيانات المستشفى">Hospital DB Schema</h4>
           <span class="project-badge card-badge-sql" style="font-size:0.7rem;"><i class="fas fa-database"></i> SQL</span>
         </div>
-        <p>Complete database design for hospital management with departments, doctors, patients, medicines, and treatment records.</p>
-        <div class="project-tech"><span>SQL</span><span>Relationships</span><span>Normalization</span></div>
+        <p data-en="Complete database design for hospital management with departments, doctors, patients, medicines, and treatment records." data-ar="تصميم قاعدة بيانات متكاملة لإدارة المستشفى تشمل الأقسام، الأطباء، المرضى، الأدوية، وسجلات العلاج.">
+          Complete database design for hospital management...
+        </p>
+        <div class="project-tech"><span>SQL</span><span data-en="Relationships" data-ar="العلاقات">Relationships</span><span data-en="Normalization" data-ar="التطبيع">Normalization</span></div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <!-- رابط ملف الـ SQL بتاع المستشفى -->
-          <a href="https://github.com/Mohamed077-n/pp/blob/main/hospital.sql" target="_blank" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fab fa-github"></i> View Code</a>
-          
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('hospitalErdModal')"><i class="fas fa-project-diagram"></i> View ERD</a>
+          <a href="https://github.com/Mohamed077-n/pp/blob/main/hospital.sql" target="_blank" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fab fa-github"></i> <span data-en="View Code" data-ar="عرض الكود">View Code</span></a>
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('hospitalErdModal')"><i class="fas fa-project-diagram"></i> <span data-en="View ERD" data-ar="عرض مخطط ERD">View ERD</span></a>
         </div>
       </div>
 
       <div class="mini-card reveal">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:8px;">
-          <h4>E-Commerce DB Schema</h4>
+          <h4 data-en="E-Commerce DB Schema" data-ar="مخطط قاعدة بيانات المتجر">E-Commerce DB Schema</h4>
           <span class="project-badge card-badge-sql" style="font-size:0.7rem;"><i class="fas fa-database"></i> SQL</span>
         </div>
-        <p>Scalable schema for e-commerce with categories, vendors, products, customers, orders, and lifecycle tracking.</p>
-        <div class="project-tech"><span>SQL</span><span>ERD</span><span>Joins</span></div>
+        <p data-en="Scalable schema for e-commerce with categories, vendors, products, customers, orders, and lifecycle tracking." data-ar="مخطط قابل للتوسع للتجارة الإلكترونية يشمل الفئات، البائعين، المنتجات، العملاء، الطلبات، وتتبع دورة حياة الطلب.">
+          Scalable schema for e-commerce...
+        </p>
+        <div class="project-tech"><span>SQL</span><span>ERD</span><span data-en="Joins" data-ar="الربط (Joins)">Joins</span></div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <!-- رابط ملف الـ SQL بتاع المتجر -->
-          <a href="https://github.com/Mohamed077-n/pp/blob/main/Ecommerce.sql" target="_blank" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fab fa-github"></i> View Code</a>
-          
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('ecommerceErdModal')"><i class="fas fa-project-diagram"></i> View ERD</a>
+          <a href="https://github.com/Mohamed077-n/pp/blob/main/Ecommerce.sql" target="_blank" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;"><i class="fab fa-github"></i> <span data-en="View Code" data-ar="عرض الكود">View Code</span></a>
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:6px 20px; font-size:0.85rem;" onclick="openModal('ecommerceErdModal')"><i class="fas fa-project-diagram"></i> <span data-en="View ERD" data-ar="عرض مخطط ERD">View ERD</span></a>
         </div>
       </div>
     </div>
@@ -479,16 +511,45 @@
   </div>
 </section>
 
+<!-- ====== CONSULTATION SECTION (NEW) ====== -->
+<section class="consultation" id="consultation">
+  <div class="container">
+    <div class="consult-wrapper">
+      <div class="consult-text reveal">
+        <h2 class="section-title" data-en="Book a Consultation" data-ar="احجز استشارة">Book a Consultation</h2>
+        <p data-en="Whether you need to build a data-driven strategy, manage your social media presence, or analyze your business numbers to make the right decision... I'm here to help you grow." data-ar="سواء كنت بحاجة لبناء استراتيجية مبنية على البيانات، إدارة تواجدك على السوشيال ميديا، أو تحليل أرقام مشروعك لاتخاذ القرار الصحيح... أنا هنا لمساعدتك على النمو.">
+          Whether you need to build a data-driven strategy, manage your social media presence...
+        </p>
+      </div>
+      
+      <form class="consult-form reveal" onsubmit="sendToWhatsApp(event)">
+        <div class="form-group">
+          <label for="cName" data-en="Your Name" data-ar="اسمك">Your Name</label>
+          <input type="text" id="cName" class="form-control" placeholder="Enter your name" data-en-placeholder="Enter your name" data-ar-placeholder="أدخل اسمك" required>
+        </div>
+        <div class="form-group">
+          <label for="cProject" data-en="Project Details / Inquiry" data-ar="تفاصيل المشروع / الاستفسار">Project Details / Inquiry</label>
+          <textarea id="cProject" class="form-control" rows="4" placeholder="How can I help you?" data-en-placeholder="How can I help you?" data-ar-placeholder="كيف يمكنني مساعدتك؟" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="fab fa-whatsapp"></i> <span data-en="Send via WhatsApp" data-ar="إرسال عبر واتساب">Send via WhatsApp</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
 <!-- ====== CONTACT ====== -->
 <section class="contact" id="contact">
   <div class="container contact-wrapper">
-    <h2 class="section-title reveal">Let's Connect</h2>
-    <p class="reveal">I'm always open to new opportunities, freelance projects, or just a friendly chat about data and growth!</p>
+    <h2 class="section-title reveal" data-en="Let's Connect" data-ar="لنتواصل">Let's Connect</h2>
+    <p class="reveal" data-en="I'm always open to new opportunities, freelance projects, or just a friendly chat about data and growth!" data-ar="أنا دائماً منفتح على الفرص الجديدة، مشاريع العمل الحر، أو مجرد محادثة ودية حول البيانات والنمو!">
+      I'm always open to new opportunities...
+    </p>
     <div class="contact-links reveal">
       <a href="mailto:mohamednagiub011@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
       <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-      <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="https://github.com/Mohamed077-n" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
       <a href="https://wa.me/201128275029" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
   </div>
@@ -497,7 +558,9 @@
 <!-- ====== FOOTER ====== -->
 <footer>
   <div class="container">
-    &copy; 2025 Mohamed Nagiub. Built with <i class="fas fa-heart" style="color:#a78bfa; margin:0 4px;"></i> for data.
+    <span data-en="&copy; 2025 Mohamed Nagiub. Built with ❤️ for data." data-ar="&copy; 2025 محمد نجيب. صُنع بـ ❤️ للبيانات.">
+      &copy; 2025 Mohamed Nagiub. Built with ❤️ for data.
+    </span>
   </div>
 </footer>
 
@@ -559,7 +622,56 @@
 
 <!-- ====== SCRIPTS ====== -->
 <script>
-  // Typing Effect
+  // ==========================================
+  // 1. LANGUAGE TOGGLE (BILINGUAL SYSTEM)
+  // ==========================================
+  let currentLang = 'en'; // Default language
+
+  function toggleLanguage() {
+    currentLang = currentLang === 'en' ? 'ar' : 'en';
+    const toggleBtn = document.getElementById('langToggle');
+    
+    if (currentLang === 'ar') {
+      document.body.classList.add('rtl');
+      document.documentElement.lang = 'ar';
+      toggleBtn.innerText = 'EN / AR';
+    } else {
+      document.body.classList.remove('rtl');
+      document.documentElement.lang = 'en';
+      toggleBtn.innerText = 'AR / EN';
+    }
+
+    // Translate all elements with data-en and data-ar
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.innerHTML = el.getAttribute('data-' + currentLang);
+    });
+
+    // Translate placeholders
+    document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+      el.setAttribute('placeholder', el.getAttribute(`data-${currentLang}-placeholder`));
+    });
+  }
+
+  // ==========================================
+  // 2. CONSULTATION FORM TO WHATSAPP
+  // ==========================================
+  function sendToWhatsApp(e) {
+    e.preventDefault();
+    const name = document.getElementById('cName').value;
+    const project = document.getElementById('cProject').value;
+    const phone = '201128275029'; // Your WhatsApp Number
+    
+    // Create the message based on current language
+    const msg = currentLang === 'en' 
+      ? `Hello Mohamed, my name is ${name}. I need a consultation regarding: ${project}`
+      : `مرحباً محمد، اسمي ${name}. أحتاج استشارة بخصوص: ${project}`;
+      
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  // ==========================================
+  // 3. TYPING EFFECT
+  // ==========================================
   const typedText = document.getElementById('typed-text');
   const words = ['Data Analyst', 'Power BI Developer', 'Social Media Manager', 'Insight Generator', 'Dashboard Designer'];
   let wordIndex = 0, charIndex = 0, isDeleting = false;
@@ -588,7 +700,9 @@
   }
   typeEffect();
 
-  // Scroll Reveal
+  // ==========================================
+  // 4. SCROLL REVEAL ANIMATIONS
+  // ==========================================
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -597,7 +711,9 @@
   }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
   reveals.forEach(el => observer.observe(el));
 
-  // Smooth nav scroll
+  // ==========================================
+  // 5. SMOOTH NAV SCROLL
+  // ==========================================
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
@@ -606,7 +722,9 @@
     });
   });
 
-  // Modal Functions
+  // ==========================================
+  // 6. MODAL FUNCTIONS
+  // ==========================================
   function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
