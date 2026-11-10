@@ -9,15 +9,10 @@
     /* ----- RESET & BASE ----- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background-color: #0d0f14;
-      color: #eaeef2;
+      background-color: #0d0f14; color: #eaeef2;
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
-      scroll-behavior: smooth;
-      transition: all 0.3s ease;
+      line-height: 1.6; scroll-behavior: smooth; transition: all 0.3s ease;
     }
-    
-    /* ----- RTL SUPPORT ----- */
     body.rtl { direction: rtl; text-align: right; }
     body.rtl .nav-links a::after { left: auto; right: 0; }
     body.rtl .section-title::after { left: auto; right: 0; }
@@ -27,11 +22,9 @@
     a { text-decoration: none; color: inherit; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-    /* ----- SCROLL ANIMATIONS ----- */
+    /* ----- SCROLL ANIMATIONS & TYPOGRAPHY ----- */
     .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ----- TYPOGRAPHY ----- */
     .section-title {
       font-size: 2.2rem; font-weight: 600; margin-bottom: 2rem;
       letter-spacing: -0.5px; position: relative; display: inline-block;
@@ -182,55 +175,6 @@
     .card-badge-pbi { background: #1e232b; border: 1px solid #f2c94c; color: #f2c94c; }
     .card-badge-sql { background: #1e232b; border: 1px solid #a78bfa; color: #a78bfa; }
 
-    /* ----- CONSULTATION SECTION ----- */
-    .consultation { padding: 80px 0; background: #0d0f14; }
-    .consult-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-    .consult-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
-    .consult-text p { color: #b8c0cc; font-size: 1.1rem; margin-bottom: 2rem; }
-    .consult-form {
-      background: #151a21; padding: 40px; border-radius: 24px; border: 1px solid #252b34;
-    }
-    
-    /* Form Toggle */
-    .form-toggle {
-      display: flex; background: #0d0f14; border-radius: 12px;
-      padding: 6px; margin-bottom: 24px; border: 1px solid #2a2f3a;
-    }
-    .toggle-btn {
-      flex: 1; padding: 10px; background: transparent; border: none;
-      color: #8892a0; font-weight: 600; font-size: 0.95rem;
-      cursor: pointer; border-radius: 8px; transition: 0.3s;
-      font-family: inherit;
-    }
-    .toggle-btn.active { background: #a78bfa; color: #0d0f14; }
-
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; margin-bottom: 8px; color: #c8d0dd; font-weight: 500; }
-    .form-control {
-      width: 100%; padding: 12px 16px; border-radius: 12px;
-      background: #0d0f14; border: 1px solid #2a2f3a; color: #fff;
-      font-family: inherit; transition: 0.3s;
-    }
-    .form-control:focus { outline: none; border-color: #a78bfa; box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2); }
-    
-    /* Custom Select Styling */
-    select.form-control {
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23a78bfa%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-      background-size: 12px;
-    }
-    body.rtl select.form-control { background-position: left 1rem center; }
-    select.form-control option { background: #0d0f14; color: #fff; }
-
-    /* Extra Fields Animation */
-    #consultation-extra-fields { display: none; animation: fadeIn 0.4s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-    .consult-form .btn { width: 100%; }
-
     /* ----- MODAL / LIGHTBOX ----- */
     .modal-overlay {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -258,7 +202,7 @@
     .modal-overlay::-webkit-scrollbar-thumb:hover { background: #a78bfa; }
 
     /* ----- CONTACT ----- */
-    .contact { padding: 80px 0; background: #11151b; }
+    .contact { padding: 80px 0; background: #0d0f14; }
     .contact-wrapper { display: flex; flex-direction: column; align-items: center; text-align: center; }
     .contact-wrapper p { color: #b8c0cc; max-width: 500px; margin-bottom: 2rem; }
     .contact-links { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; }
@@ -271,14 +215,13 @@
     /* ----- RESPONSIVE ----- */
     @media (max-width: 900px) {
       .nav { justify-content: center; }
-      .hero-grid, .about-grid, .consult-wrapper { grid-template-columns: 1fr; text-align: center; }
-      .hero-content h1, .consult-text h2 { font-size: 2.6rem; }
-      .hero-sub, .consult-text p { margin: 0 auto 1.5rem; }
+      .hero-grid, .about-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-content h1 { font-size: 2.6rem; }
+      .hero-sub { margin: 0 auto 1.5rem; }
       .btn-group { justify-content: center; }
       .about-stats { grid-template-columns: 1fr 1fr; }
       .typing-wrapper { min-height: auto; }
       .hero-visual .placeholder-icon { font-size: 8rem; padding: 24px; }
-      .consult-form { padding: 24px; }
     }
     @media (max-width: 600px) {
       .nav-links { gap: 1rem; font-size: 0.9rem; flex-wrap: wrap; justify-content: center; }
@@ -298,7 +241,8 @@
       <li><a href="#about" data-en="About" data-ar="عني">About</a></li>
       <li><a href="#services" data-en="Services" data-ar="الخدمات">Services</a></li>
       <li><a href="#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
-      <li><a href="#consultation" data-en="Consultation" data-ar="الاستشارات">Consultation</a></li>
+      <!-- زرار يروح لصفحة الاستشارات المستقلة -->
+      <li><a href="consultation.html" data-en="Consultation" data-ar="الاستشارات">Consultation</a></li>
       <li><a href="#contact" data-en="Contact" data-ar="تواصل معي">Contact</a></li>
     </ul>
     <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">AR / EN</button>
@@ -319,7 +263,7 @@
       </p>
       <div class="btn-group">
         <a href="#projects" class="btn btn-primary" data-en="View Projects" data-ar="عرض المشاريع">View Projects</a>
-        <a href="#contact" class="btn btn-outline" data-en="Contact Me" data-ar="تواصل معي">Contact Me</a>
+        <a href="consultation.html" class="btn btn-outline" data-en="Book Consultation" data-ar="احجز استشارة">Book Consultation</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -541,60 +485,6 @@
   </div>
 </section>
 
-<!-- ====== CONSULTATION SECTION ====== -->
-<section class="consultation" id="consultation">
-  <div class="container">
-    <div class="consult-wrapper">
-      <div class="consult-text reveal">
-        <h2 class="section-title" data-en="Book a Consultation" data-ar="احجز استشارة">Book a Consultation</h2>
-        <p data-en="Whether you need to build a data-driven strategy, manage your social media presence, or analyze your business numbers to make the right decision... I'm here to help you grow." data-ar="سواء كنت بحاجة لبناء استراتيجية مبنية على البيانات، إدارة تواجدك على السوشيال ميديا، أو تحليل أرقام مشروعك لاتخاذ القرار الصحيح... أنا هنا لمساعدتك على النمو.">
-          Whether you need to build a data-driven strategy, manage your social media presence...
-        </p>
-      </div>
-      
-      <form class="consult-form reveal" onsubmit="sendToWhatsApp(event)">
-        
-        <!-- Toggle Buttons -->
-        <div class="form-toggle">
-          <button type="button" id="btn-inquiry" class="toggle-btn active" onclick="setFormMode('inquiry')">Inquiry / استفسار</button>
-          <button type="button" id="btn-consultation" class="toggle-btn" onclick="setFormMode('consultation')">Consultation / استشارة</button>
-        </div>
-
-        <div class="form-group">
-          <label for="cName" id="lbl-name">Your Name</label>
-          <input type="text" id="cName" class="form-control" required>
-        </div>
-
-        <!-- Extra Fields for Consultation Only (Hidden by default) -->
-        <div id="consultation-extra-fields">
-          <div class="form-group">
-            <label for="cService" id="lbl-service">Service Needed</label>
-            <select id="cService" class="form-control">
-              <option value="Data Analysis" data-en="Data Analysis & BI" data-ar="تحليل البيانات وذكاء الأعمال">Data Analysis & BI</option>
-              <option value="Social Media" data-en="Social Media Management" data-ar="إدارة السوشيال ميديا">Social Media Management</option>
-              <option value="Paid Ads" data-en="Paid Advertising" data-ar="الإعلانات المدفوعة">Paid Advertising</option>
-              <option value="Educational" data-en="Educational Solutions" data-ar="الحلول التعليمية">Educational Solutions</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="cBusiness" id="lbl-business">Your Business / Industry</label>
-            <input type="text" id="cBusiness" class="form-control" data-en-placeholder="e.g., E-commerce, Education, Tech..." data-ar-placeholder="مثال: تجارة إلكترونية، تعليم، تكنولوجيا...">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="cProject" id="lbl-details">Project Details</label>
-          <textarea id="cProject" class="form-control" rows="4" required></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary">
-          <i class="fab fa-whatsapp"></i> <span id="btn-submit-text">Send</span>
-        </button>
-      </form>
-    </div>
-  </div>
-</section>
-
 <!-- ====== CONTACT ====== -->
 <section class="contact" id="contact">
   <div class="container contact-wrapper">
@@ -606,7 +496,6 @@
       <a href="mailto:mohamednagiub011@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
       <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
       <a href="https://github.com/Mohamed077-n" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <!-- تم تحديث رقم الواتساب هنا -->
       <a href="https://wa.me/201272137273" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
   </div>
@@ -622,24 +511,14 @@
 </footer>
 
 <!-- ====== MODALS ====== -->
-
-<!-- Excel Dashboard Modal -->
 <div class="modal-overlay" id="dashboardModal">
   <button class="modal-close" onclick="closeModal('dashboardModal')">&times;</button>
-  <div class="modal-content">
-    <img src="dashboard.png" alt="Excel Sales Dashboard">
-  </div>
+  <div class="modal-content"><img src="dashboard.png" alt="Excel Sales Dashboard"></div>
 </div>
-
-<!-- Power BI Sales Modal -->
 <div class="modal-overlay" id="powerbiSalesModal">
   <button class="modal-close" onclick="closeModal('powerbiSalesModal')">&times;</button>
-  <div class="modal-content">
-    <img src="image.png" alt="Sales Report">
-  </div>
+  <div class="modal-content"><img src="image.png" alt="Sales Report"></div>
 </div>
-
-<!-- Power BI HR Modal -->
 <div class="modal-overlay" id="powerbiHRModal">
   <button class="modal-close" onclick="closeModal('powerbiHRModal')">&times;</button>
   <div class="modal-content">
@@ -648,8 +527,6 @@
     <img src="image 3.png" alt="Employees details">
   </div>
 </div>
-
-<!-- Power BI E-Commerce Modal -->
 <div class="modal-overlay" id="powerbiEcommerceModal">
   <button class="modal-close" onclick="closeModal('powerbiEcommerceModal')">&times;</button>
   <div class="modal-content">
@@ -660,36 +537,30 @@
     <img src="image 8.png" alt="E-commerce store 5">
   </div>
 </div>
-
-<!-- Hospital ERD Modal -->
 <div class="modal-overlay" id="hospitalErdModal">
   <button class="modal-close" onclick="closeModal('hospitalErdModal')">&times;</button>
-  <div class="modal-content">
-    <img src="hospital-erd.png" alt="Hospital ERD">
-  </div>
+  <div class="modal-content"><img src="hospital-erd.png" alt="Hospital ERD"></div>
 </div>
-
-<!-- E-Commerce ERD Modal -->
 <div class="modal-overlay" id="ecommerceErdModal">
   <button class="modal-close" onclick="closeModal('ecommerceErdModal')">&times;</button>
-  <div class="modal-content">
-    <img src="ecommerce-erd.png" alt="E-Commerce ERD">
-  </div>
+  <div class="modal-content"><img src="ecommerce-erd.png" alt="E-Commerce ERD"></div>
 </div>
 
 <!-- ====== SCRIPTS ====== -->
 <script>
-  // ==========================================
-  // STATE VARIABLES
-  // ==========================================
-  let currentLang = 'en'; 
-  let formMode = 'inquiry'; 
+  let currentLang = 'en';
 
-  // ==========================================
-  // 1. LANGUAGE TOGGLE
-  // ==========================================
+  // Load language preference from localStorage
+  if(localStorage.getItem('siteLang') === 'ar') {
+    currentLang = 'ar';
+    document.body.classList.add('rtl');
+    document.documentElement.lang = 'ar';
+  }
+
   function toggleLanguage() {
     currentLang = currentLang === 'en' ? 'ar' : 'en';
+    localStorage.setItem('siteLang', currentLang); // Save preference
+    
     const toggleBtn = document.getElementById('langToggle');
     
     if (currentLang === 'ar') {
@@ -709,107 +580,24 @@
     document.querySelectorAll('[data-en-placeholder]').forEach(el => {
       el.setAttribute('placeholder', el.getAttribute(`data-${currentLang}-placeholder`));
     });
-
-    updateFormTexts();
   }
 
-  // ==========================================
-  // 2. FORM MODE TOGGLE
-  // ==========================================
-  function setFormMode(mode) {
-    formMode = mode;
-    
-    document.getElementById('btn-inquiry').classList.toggle('active', mode === 'inquiry');
-    document.getElementById('btn-consultation').classList.toggle('active', mode === 'consultation');
-    
-    const extraFields = document.getElementById('consultation-extra-fields');
-    if (mode === 'consultation') {
-      extraFields.style.display = 'block';
-      document.getElementById('cBusiness').required = true; 
+  // Initialize language on load
+  window.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('langToggle');
+    if (currentLang === 'ar') {
+      document.body.classList.add('rtl');
+      document.documentElement.lang = 'ar';
+      if(toggleBtn) toggleBtn.innerText = 'EN / AR';
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.innerHTML = el.getAttribute('data-ar');
+      });
     } else {
-      extraFields.style.display = 'none';
-      document.getElementById('cBusiness').required = false;
-      document.getElementById('cBusiness').value = ''; 
+      if(toggleBtn) toggleBtn.innerText = 'AR / EN';
     }
-    
-    updateFormTexts();
-  }
+  });
 
-  function updateFormTexts() {
-    const isEn = currentLang === 'en';
-    
-    const texts = {
-      inquiry: {
-        btnInq: isEn ? 'Inquiry' : 'استفسار',
-        btnCons: isEn ? 'Consultation' : 'استشارة',
-        nameLabel: isEn ? 'Your Name' : 'اسمك',
-        namePlaceholder: isEn ? 'Enter your name' : 'أدخل اسمك',
-        detailsLabel: isEn ? 'Your Question / Inquiry' : 'سؤالك / موضوع الاستفسار',
-        detailsPlaceholder: isEn ? 'What would you like to ask about?' : 'عن ماذا تريد أن تسأل؟',
-        submitBtn: isEn ? 'Send Inquiry via WhatsApp' : 'إرسال الاستفسار عبر واتساب'
-      },
-      consultation: {
-        btnInq: isEn ? 'Inquiry' : 'استفسار',
-        btnCons: isEn ? 'Consultation' : 'استشارة',
-        nameLabel: isEn ? 'Your Name' : 'اسمك',
-        namePlaceholder: isEn ? 'Enter your name' : 'أدخل اسمك',
-        detailsLabel: isEn ? 'Additional Project Details' : 'تفاصيل إضافية عن المشروع',
-        detailsPlaceholder: isEn ? 'Tell me more about what you need...' : 'أخبرني المزيد عما تحتاجه...',
-        submitBtn: isEn ? 'Book Consultation via WhatsApp' : 'احجز استشارة عبر واتساب'
-      }
-    };
-
-    const t = texts[formMode];
-    
-    document.getElementById('btn-inquiry').innerText = t.btnInq;
-    document.getElementById('btn-consultation').innerText = t.btnCons;
-    document.getElementById('lbl-name').innerText = t.nameLabel;
-    document.getElementById('cName').setAttribute('placeholder', t.namePlaceholder);
-    document.getElementById('lbl-details').innerText = t.detailsLabel;
-    document.getElementById('cProject').setAttribute('placeholder', t.detailsPlaceholder);
-    document.getElementById('btn-submit-text').innerText = t.submitBtn;
-
-    document.getElementById('lbl-service').innerText = isEn ? 'Service Needed' : 'الخدمة المطلوبة';
-    document.getElementById('lbl-business').innerText = isEn ? 'Your Business / Industry' : 'مجال عملك / شركتك';
-  }
-
-  // ==========================================
-  // 3. SEND TO WHATSAPP
-  // ==========================================
-  function sendToWhatsApp(e) {
-    e.preventDefault();
-    const name = document.getElementById('cName').value;
-    const project = document.getElementById('cProject').value;
-    // تم تحديث رقم الواتساب هنا أيضاً
-    const phone = '201272137273'; 
-    
-    let msg = '';
-    
-    if (currentLang === 'en') {
-      if (formMode === 'inquiry') {
-        msg = `Hello Mohamed, my name is ${name}. I have an inquiry: ${project}`;
-      } else {
-        const service = document.getElementById('cService').value;
-        const business = document.getElementById('cBusiness').value;
-        msg = `Hello Mohamed, my name is ${name}.\nI would like to book a consultation.\nService Needed: ${service}\nMy Business: ${business}\nDetails: ${project}`;
-      }
-    } else {
-      if (formMode === 'inquiry') {
-        msg = `مرحباً محمد، اسمي ${name}. لدي استفسار بخصوص: ${project}`;
-      } else {
-        const serviceSelect = document.getElementById('cService');
-        const serviceAr = serviceSelect.options[serviceSelect.selectedIndex].getAttribute('data-ar');
-        const business = document.getElementById('cBusiness').value;
-        msg = `مرحباً محمد، اسمي ${name}.\nأرغب في حجز استشارة.\nالخدمة المطلوبة: ${serviceAr}\nمجال عملي: ${business}\nتفاصيل إضافية: ${project}`;
-      }
-    }
-      
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
-  }
-
-  // ==========================================
-  // 4. TYPING EFFECT
-  // ==========================================
+  // Typing Effect
   const typedText = document.getElementById('typed-text');
   const words = ['Data Analyst', 'Power BI Developer', 'Social Media Manager', 'Insight Generator', 'Dashboard Designer'];
   let wordIndex = 0, charIndex = 0, isDeleting = false;
@@ -838,9 +626,7 @@
   }
   typeEffect();
 
-  // ==========================================
-  // 5. SCROLL REVEAL ANIMATIONS
-  // ==========================================
+  // Scroll Reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -849,9 +635,7 @@
   }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
   reveals.forEach(el => observer.observe(el));
 
-  // ==========================================
-  // 6. SMOOTH NAV SCROLL
-  // ==========================================
+  // Smooth nav scroll
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
@@ -860,9 +644,7 @@
     });
   });
 
-  // ==========================================
-  // 7. MODAL FUNCTIONS
-  // ==========================================
+  // Modal Functions
   function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -888,9 +670,6 @@
       document.querySelectorAll('.modal-overlay.active').forEach(modal => closeModal(modal.id));
     }
   });
-
-  // Initialize form texts on load
-  updateFormTexts();
 </script>
 
 </body>
