@@ -16,7 +16,7 @@
       --text-main: #eaeef2;
       --text-muted: #b8c0cc;
     }
-    html { scroll-behavior: smooth; } /* تفعيل النزول الناعم */
+    html { scroll-behavior: smooth; } 
     
     body {
       background-color: var(--bg-dark); color: var(--text-main);
@@ -45,14 +45,14 @@
     }
     .highlight { color: var(--primary); }
 
-    /* ----- MODERN HEADER / NAV ----- */
+    /* ----- MODERN HEADER / NAV (Dropdown) ----- */
     header {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-      background: rgba(13, 15, 20, 0.7); backdrop-filter: blur(16px);
+      background: rgba(13, 15, 20, 0.85); backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,0.05); padding: 12px 0;
       transition: 0.3s ease;
     }
-    .nav { display: flex; justify-content: space-between; align-items: center; }
+    .nav { display: flex; justify-content: space-between; align-items: center; position: relative; }
     
     .nav-logo {
       height: 50px; width: 50px; object-fit: cover;
@@ -82,70 +82,46 @@
 
     /* Mobile Menu Toggle */
     .menu-toggle {
-      display: none; font-size: 1.5rem; color: var(--text-main); cursor: pointer;
+      display: none; font-size: 1.4rem; color: var(--text-main); cursor: pointer;
       background: var(--bg-card); padding: 10px 14px; border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
     }
+    .menu-toggle:hover { color: var(--primary); }
 
-    /* Mobile Sidebar Styling */
-    .close-menu { display: none; }
-    .menu-overlay { display: none; }
-    
+    /* Mobile Dropdown Styling */
     @media (max-width: 900px) {
-      .menu-toggle { display: block; }
+      .menu-toggle { display: flex; align-items: center; justify-content: center; }
       
       .nav-menu {
-        position: fixed; top: 0; right: -100%;
-        width: 80%; max-width: 320px; height: 100vh;
-        background: rgba(21, 26, 33, 0.95);
+        position: absolute; top: 100%; left: 0; width: 100%;
+        background: rgba(21, 26, 33, 0.98);
         backdrop-filter: blur(20px);
-        border-left: 1px solid rgba(255,255,255,0.05);
-        flex-direction: column; justify-content: flex-start; align-items: flex-start;
-        padding: 80px 20px 40px;
-        transition: right 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
-        z-index: 1001;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-      }
-      body.rtl .nav-menu {
-        right: auto; left: -100%; border-left: none; border-right: 1px solid rgba(255,255,255,0.05);
-        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        flex-direction: column; align-items: stretch;
+        padding: 0 20px; 
+        max-height: 0; overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.4s ease;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.6);
       }
       
-      .nav-menu.active { right: 0; }
-      body.rtl .nav-menu.active { left: 0; }
+      /* الكلاس اللي بيتضاف بالجافاسكريبت عشان يفتح القائمة */
+      .nav-menu.show { 
+        max-height: 500px; 
+        padding: 20px;
+      }
 
-      /* Sidebar Links */
       .nav-links { flex-direction: column; width: 100%; gap: 10px; align-items: stretch; }
       .nav-links li { width: 100%; }
       .nav-links a {
         font-size: 1.1rem; display: flex; align-items: center; gap: 12px;
-        padding: 14px 20px; border-radius: 14px; background: rgba(255,255,255,0.02);
+        padding: 12px 20px; border-radius: 12px; background: rgba(255,255,255,0.02);
         transition: 0.3s;
       }
-      .nav-links a i { width: 24px; text-align: center; color: var(--primary); font-size: 1.2rem; }
+      .nav-links a i { width: 24px; text-align: center; color: var(--primary); font-size: 1.1rem; }
       .nav-links a:hover, .nav-links a.active-link { background: rgba(167, 139, 250, 0.15); color: var(--primary); }
       .nav-links a::after { display: none; }
 
-      .lang-btn { margin-top: 20px; width: 100%; text-align: center; }
-
-      /* Close Button */
-      .close-menu {
-        display: flex; align-items: center; justify-content: center;
-        position: absolute; top: 20px; right: 20px;
-        width: 40px; height: 40px; border-radius: 50%;
-        background: rgba(255,255,255,0.05); cursor: pointer; color: var(--text-main);
-        transition: 0.3s;
-      }
-      body.rtl .close-menu { right: auto; left: 20px; }
-      .close-menu:hover { background: rgba(255, 87, 87, 0.2); color: #ff5757; }
-
-      /* Overlay */
-      .menu-overlay {
-        display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.7); z-index: 1000; opacity: 0; pointer-events: none;
-        transition: opacity 0.4s ease;
-      }
-      .menu-overlay.active { opacity: 1; pointer-events: auto; }
+      .lang-btn { margin-top: 15px; width: 100%; text-align: center; padding: 12px; }
     }
 
     /* ----- HERO ----- */
@@ -307,15 +283,13 @@
       <img src="logo.png" alt="Mohamed Nagiub Logo" class="nav-logo">
     </a>
 
+    <!-- زرار فتح القائمة (موبايل) -->
     <div class="menu-toggle" id="mobile-menu">
       <i class="fas fa-bars"></i>
     </div>
 
+    <!-- القائمة المنسدلة -->
     <div class="nav-menu" id="nav-menu">
-      <div class="close-menu" id="close-menu">
-        <i class="fas fa-times"></i>
-      </div>
-      
       <ul class="nav-links">
         <li><a href="#about"><i class="fas fa-user"></i> <span data-en="About" data-ar="عني">About</span></a></li>
         <li><a href="#services"><i class="fas fa-cogs"></i> <span data-en="Services" data-ar="الخدمات">Services</span></a></li>
@@ -328,8 +302,6 @@
     </div>
   </div>
 </header>
-
-<div class="menu-overlay" id="menu-overlay"></div>
 
 <!-- ====== HERO ====== -->
 <section class="hero" id="home">
@@ -675,26 +647,40 @@
     }
   });
 
-  // Sidebar Logic (FIXED)
+  // Dropdown Menu Logic
   const mobileMenu = document.getElementById('mobile-menu');
   const navMenu = document.getElementById('nav-menu');
-  const closeMenu = document.getElementById('close-menu');
-  const menuOverlay = document.getElementById('menu-overlay');
+  const menuIcon = mobileMenu.querySelector('i');
 
   function toggleMenu() {
-    navMenu.classList.toggle('active');
-    menuOverlay.classList.toggle('active');
-    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+    navMenu.classList.toggle('show');
+    
+    // تغيير شكل الأيقونة
+    if (navMenu.classList.contains('show')) {
+      menuIcon.classList.remove('fa-bars');
+      menuIcon.classList.add('fa-times');
+    } else {
+      menuIcon.classList.remove('fa-times');
+      menuIcon.classList.add('fa-bars');
+    }
   }
 
-  mobileMenu.addEventListener('click', toggleMenu);
-  closeMenu.addEventListener('click', toggleMenu);
-  menuOverlay.addEventListener('click', toggleMenu);
+  mobileMenu.addEventListener('click', (e) => {
+    e.stopPropagation(); // منع انتشار الحدث
+    toggleMenu();
+  });
 
-  // إغلاق القائمة فقط عند الضغط على أي لينك، والمتصفح سيتصرف تلقائياً وينزل للقسم
+  // قفل القائمة لما تدوس في أي مكان براها
+  document.addEventListener('click', (e) => {
+    if (!navMenu.contains(e.target) && !mobileMenu.contains(e.target) && navMenu.classList.contains('show')) {
+      toggleMenu();
+    }
+  });
+
+  // قفل القائمة لما تدوس على أي لينك
   document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', function() {
-      if (navMenu.classList.contains('active')) {
+    link.addEventListener('click', () => {
+      if (navMenu.classList.contains('show')) {
         toggleMenu();
       }
     });
