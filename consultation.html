@@ -23,9 +23,22 @@
     header {
       position: sticky; top: 0; z-index: 100;
       background: rgba(13, 15, 20, 0.85); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.05); padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05); padding: 10px 0;
     }
     .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    
+    /* تصميم اللوجو */
+    .nav-logo {
+      height: 55px; 
+      width: 55px; 
+      object-fit: cover;
+      border-radius: 50%; 
+      background-color: #fff; 
+      padding: 2px;
+      transition: transform 0.3s ease;
+    }
+    .nav-logo:hover { transform: scale(1.05); }
+
     .nav-links { display: flex; gap: 2rem; list-style: none; font-weight: 500; align-items: center; margin: 0 auto; }
     .nav-links a { font-size: 1rem; transition: color 0.2s; }
     .nav-links a:hover { color: #a78bfa; }
@@ -98,6 +111,8 @@
     footer { padding: 24px 0; border-top: 1px solid #1e232b; text-align: center; color: #5a6475; font-size: 0.9rem; }
 
     @media (max-width: 600px) {
+      .nav { justify-content: center; }
+      .nav-logo { height: 45px; width: 45px; }
       .nav-links { gap: 1rem; font-size: 0.9rem; flex-wrap: wrap; justify-content: center; }
       .consult-header h1 { font-size: 2rem; }
       .consult-form { padding: 24px; }
@@ -109,11 +124,18 @@
 <!-- ====== HEADER ====== -->
 <header>
   <div class="container nav">
+    
+    <!-- اللوجو الجديد -->
+    <a href="index.html">
+      <img src="logo.png" alt="Mohamed Nagiub Logo" class="nav-logo">
+    </a>
+
     <ul class="nav-links">
       <li><a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a></li>
       <li><a href="index.html#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
       <li><a href="consultation.html" style="color: #a78bfa;" data-en="Consultation" data-ar="الاستشارات">Consultation</a></li>
     </ul>
+    
     <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">AR / EN</button>
   </div>
 </header>
@@ -122,10 +144,9 @@
 <section class="consultation">
   <div class="container consult-wrapper">
     
-    <!-- تم إضافة ID هنا عشان الجافاسكريبت تغيره -->
     <div class="consult-header">
       <h1 id="page-title">Book a Consultation</h1>
-      <p id="page-subtitle">Whether you need to build a data-driven strategy, manage your social media presence...</p>
+      <p id="page-subtitle">Whether you need to build a data-driven strategy...</p>
     </div>
 
     <form class="consult-form" onsubmit="sendToWhatsApp(event)">
@@ -185,7 +206,6 @@
   let currentLang = 'en'; 
   let formMode = 'inquiry'; 
 
-  // Load language preference
   if(localStorage.getItem('siteLang') === 'ar') {
     currentLang = 'ar';
     document.body.classList.add('rtl');
@@ -241,7 +261,6 @@
   function updateFormTexts() {
     const isEn = currentLang === 'en';
     
-    // هنا بنغير الكلام بتاع العناوين الرئيسية حسب الزرار
     const texts = {
       inquiry: {
         pageTitle: isEn ? 'Send an Inquiry' : 'إرسال استفسار',
@@ -269,11 +288,8 @@
 
     const t = texts[formMode];
     
-    // تغيير العنوان الرئيسي والوصف
     document.getElementById('page-title').innerText = t.pageTitle;
     document.getElementById('page-subtitle').innerText = t.pageSubtitle;
-
-    // تغيير باقي النصوص
     document.getElementById('btn-inquiry').innerText = t.btnInq;
     document.getElementById('btn-consultation').innerText = t.btnCons;
     document.getElementById('lbl-name').innerText = t.nameLabel;
@@ -316,7 +332,6 @@
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
-  // Initialize on load
   window.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('langToggle');
     if (currentLang === 'ar') {
