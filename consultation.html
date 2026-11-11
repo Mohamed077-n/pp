@@ -19,27 +19,29 @@
     a { text-decoration: none; color: inherit; }
     .container { max-width: 800px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
-    /* ----- HEADER / NAV ----- */
+    /* ----- HEADER / NAV (Sidebar Design) ----- */
     header {
       position: sticky; top: 0; z-index: 100;
       background: rgba(13, 15, 20, 0.85); backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255,255,255,0.05); padding: 10px 0;
     }
-    .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; }
     
-    /* تصميم اللوجو */
     .nav-logo {
-      height: 55px; 
-      width: 55px; 
-      object-fit: cover;
-      border-radius: 50%; 
-      background-color: #fff; 
-      padding: 2px;
+      height: 55px; width: 55px; object-fit: cover;
+      border-radius: 50%; background-color: #fff; padding: 2px;
       transition: transform 0.3s ease;
     }
     .nav-logo:hover { transform: scale(1.05); }
 
-    .nav-links { display: flex; gap: 2rem; list-style: none; font-weight: 500; align-items: center; margin: 0 auto; }
+    .menu-toggle {
+      display: none; font-size: 1.8rem; color: #eaeef2; cursor: pointer;
+      transition: color 0.3s;
+    }
+    .menu-toggle:hover { color: #a78bfa; }
+
+    .nav-menu { display: flex; align-items: center; gap: 2rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; font-weight: 500; align-items: center; }
     .nav-links a { font-size: 1rem; transition: color 0.2s; }
     .nav-links a:hover { color: #a78bfa; }
     
@@ -49,6 +51,9 @@
       font-weight: bold; font-size: 0.9rem; transition: 0.3s;
     }
     .lang-btn:hover { background: #a78bfa; color: #0d0f14; }
+
+    .close-menu { display: none; }
+    .menu-overlay { display: none; }
 
     /* ----- CONSULTATION SECTION ----- */
     .consultation { padding: 60px 0; flex-grow: 1; display: flex; align-items: center; }
@@ -63,7 +68,6 @@
       width: 100%; max-width: 600px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
     }
     
-    /* Form Toggle */
     .form-toggle {
       display: flex; background: #0d0f14; border-radius: 12px;
       padding: 6px; margin-bottom: 24px; border: 1px solid #2a2f3a;
@@ -85,7 +89,6 @@
     }
     .form-control:focus { outline: none; border-color: #a78bfa; box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2); }
     
-    /* Custom Select Styling */
     select.form-control {
       appearance: none; -webkit-appearance: none;
       background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23a78bfa%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
@@ -94,7 +97,6 @@
     body.rtl select.form-control { background-position: left 1rem center; }
     select.form-control option { background: #0d0f14; color: #fff; }
 
-    /* Extra Fields Animation */
     #consultation-extra-fields { display: none; animation: fadeIn 0.4s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -107,13 +109,45 @@
     }
     .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(108, 140, 255, 0.4); }
 
-    /* ----- FOOTER ----- */
     footer { padding: 24px 0; border-top: 1px solid #1e232b; text-align: center; color: #5a6475; font-size: 0.9rem; }
 
-    @media (max-width: 600px) {
-      .nav { justify-content: center; }
-      .nav-logo { height: 45px; width: 45px; }
-      .nav-links { gap: 1rem; font-size: 0.9rem; flex-wrap: wrap; justify-content: center; }
+    /* ----- RESPONSIVE (SIDEBAR LOGIC) ----- */
+    @media (max-width: 900px) {
+      .menu-toggle { display: block; }
+      .nav-menu {
+        position: fixed; top: 0; right: -100%;
+        width: 280px; height: 100vh;
+        background: #151a21;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 80px 20px 20px;
+        transition: right 0.3s ease;
+        z-index: 1001;
+        border-left: 1px solid #252b34;
+      }
+      body.rtl .nav-menu { right: auto; left: -100%; border-left: none; border-right: 1px solid #252b34; }
+      .nav-menu.active { right: 0; }
+      body.rtl .nav-menu.active { left: 0; }
+
+      .nav-links { flex-direction: column; width: 100%; gap: 1.5rem; align-items: flex-start; }
+      .nav-links a { font-size: 1.2rem; display: block; width: 100%; }
+      body.rtl .nav-links { align-items: flex-start; }
+
+      .lang-btn { margin-top: 2rem; width: 100%; }
+
+      .close-menu {
+        display: block; position: absolute; top: 20px; right: 20px;
+        font-size: 1.5rem; cursor: pointer; color: #a78bfa;
+      }
+      body.rtl .close-menu { right: auto; left: 20px; }
+
+      .menu-overlay {
+        display: none; position: fixed; top: 0; left: 0;
+        width: 100%; height: 100%; background: rgba(0,0,0,0.7);
+        z-index: 1000;
+      }
+      .menu-overlay.active { display: block; }
+
       .consult-header h1 { font-size: 2rem; }
       .consult-form { padding: 24px; }
     }
@@ -125,20 +159,31 @@
 <header>
   <div class="container nav">
     
-    <!-- اللوجو الجديد -->
     <a href="index.html">
       <img src="logo.png" alt="Mohamed Nagiub Logo" class="nav-logo">
     </a>
 
-    <ul class="nav-links">
-      <li><a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a></li>
-      <li><a href="index.html#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
-      <li><a href="consultation.html" style="color: #a78bfa;" data-en="Consultation" data-ar="الاستشارات">Consultation</a></li>
-    </ul>
-    
-    <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">AR / EN</button>
+    <div class="menu-toggle" id="mobile-menu">
+      <i class="fas fa-bars"></i>
+    </div>
+
+    <div class="nav-menu" id="nav-menu">
+      <div class="close-menu" id="close-menu">
+        <i class="fas fa-times"></i>
+      </div>
+      
+      <ul class="nav-links">
+        <li><a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a></li>
+        <li><a href="index.html#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
+        <li><a href="consultation.html" style="color: #a78bfa;" data-en="Consultation" data-ar="الاستشارات">Consultation</a></li>
+      </ul>
+      
+      <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">AR / EN</button>
+    </div>
   </div>
 </header>
+
+<div class="menu-overlay" id="menu-overlay"></div>
 
 <!-- ====== CONSULTATION SECTION ====== -->
 <section class="consultation">
@@ -151,7 +196,6 @@
 
     <form class="consult-form" onsubmit="sendToWhatsApp(event)">
       
-      <!-- Toggle Buttons -->
       <div class="form-toggle">
         <button type="button" id="btn-inquiry" class="toggle-btn active" onclick="setFormMode('inquiry')">Inquiry / استفسار</button>
         <button type="button" id="btn-consultation" class="toggle-btn" onclick="setFormMode('consultation')">Consultation / استشارة</button>
@@ -162,7 +206,6 @@
         <input type="text" id="cName" class="form-control" required>
       </div>
 
-      <!-- Extra Fields for Consultation Only (Hidden by default) -->
       <div id="consultation-extra-fields">
         <div class="form-group">
           <label for="cService" id="lbl-service">Service Needed</label>
@@ -331,6 +374,29 @@
       
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
   }
+
+  // Sidebar Logic
+  const mobileMenu = document.getElementById('mobile-menu');
+  const navMenu = document.getElementById('nav-menu');
+  const closeMenu = document.getElementById('close-menu');
+  const menuOverlay = document.getElementById('menu-overlay');
+
+  function toggleMenu() {
+    navMenu.classList.toggle('active');
+    menuOverlay.classList.toggle('active');
+    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+  }
+
+  mobileMenu.addEventListener('click', toggleMenu);
+  closeMenu.addEventListener('click', toggleMenu);
+  menuOverlay.addEventListener('click', toggleMenu);
+
+  // Close menu when clicking a link
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (navMenu.classList.contains('active')) toggleMenu();
+    });
+  });
 
   window.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('langToggle');
