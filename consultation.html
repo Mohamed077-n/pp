@@ -419,9 +419,29 @@
   closeMenu.addEventListener('click', toggleMenu);
   menuOverlay.addEventListener('click', toggleMenu);
 
+  // Smooth nav scroll (FIXED)
   document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      if (navMenu.classList.contains('active')) toggleMenu();
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      
+      if (href.startsWith('#') && href !== '#') {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        
+        if (navMenu.classList.contains('active')) {
+          toggleMenu();
+        }
+        
+        setTimeout(() => {
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 400);
+      } else {
+        if (navMenu.classList.contains('active')) {
+          toggleMenu();
+        }
+      }
     });
   });
 
