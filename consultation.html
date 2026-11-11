@@ -42,8 +42,8 @@
     .consult-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; }
     
     .consult-header { text-align: center; margin-bottom: 40px; }
-    .consult-header h1 { font-size: 2.5rem; margin-bottom: 1rem; color: #a78bfa; }
-    .consult-header p { color: #b8c0cc; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+    .consult-header h1 { font-size: 2.5rem; margin-bottom: 1rem; color: #a78bfa; transition: 0.3s; }
+    .consult-header p { color: #b8c0cc; font-size: 1.1rem; max-width: 600px; margin: 0 auto; transition: 0.3s; }
 
     .consult-form {
       background: #151a21; padding: 40px; border-radius: 24px; border: 1px solid #252b34;
@@ -110,7 +110,6 @@
 <header>
   <div class="container nav">
     <ul class="nav-links">
-      <!-- زرار يروح للصفحة الرئيسية -->
       <li><a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a></li>
       <li><a href="index.html#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
       <li><a href="consultation.html" style="color: #a78bfa;" data-en="Consultation" data-ar="الاستشارات">Consultation</a></li>
@@ -123,11 +122,10 @@
 <section class="consultation">
   <div class="container consult-wrapper">
     
+    <!-- تم إضافة ID هنا عشان الجافاسكريبت تغيره -->
     <div class="consult-header">
-      <h1 data-en="Book a Consultation" data-ar="احجز استشارة">Book a Consultation</h1>
-      <p data-en="Whether you need to build a data-driven strategy, manage your social media presence, or analyze your business numbers to make the right decision... I'm here to help you grow." data-ar="سواء كنت بحاجة لبناء استراتيجية مبنية على البيانات، إدارة تواجدك على السوشيال ميديا، أو تحليل أرقام مشروعك لاتخاذ القرار الصحيح... أنا هنا لمساعدتك على النمو.">
-        Whether you need to build a data-driven strategy, manage your social media presence...
-      </p>
+      <h1 id="page-title">Book a Consultation</h1>
+      <p id="page-subtitle">Whether you need to build a data-driven strategy, manage your social media presence...</p>
     </div>
 
     <form class="consult-form" onsubmit="sendToWhatsApp(event)">
@@ -187,7 +185,7 @@
   let currentLang = 'en'; 
   let formMode = 'inquiry'; 
 
-  // Load language preference from localStorage
+  // Load language preference
   if(localStorage.getItem('siteLang') === 'ar') {
     currentLang = 'ar';
     document.body.classList.add('rtl');
@@ -243,8 +241,11 @@
   function updateFormTexts() {
     const isEn = currentLang === 'en';
     
+    // هنا بنغير الكلام بتاع العناوين الرئيسية حسب الزرار
     const texts = {
       inquiry: {
+        pageTitle: isEn ? 'Send an Inquiry' : 'إرسال استفسار',
+        pageSubtitle: isEn ? 'Do you have a question? Send me your inquiry and I will get back to you as soon as possible.' : 'هل لديك سؤال؟ أرسل لي استفسارك وسأرد عليك في أقرب وقت ممكن.',
         btnInq: isEn ? 'Inquiry' : 'استفسار',
         btnCons: isEn ? 'Consultation' : 'استشارة',
         nameLabel: isEn ? 'Your Name' : 'اسمك',
@@ -254,6 +255,8 @@
         submitBtn: isEn ? 'Send Inquiry via WhatsApp' : 'إرسال الاستفسار عبر واتساب'
       },
       consultation: {
+        pageTitle: isEn ? 'Book a Consultation' : 'احجز استشارة',
+        pageSubtitle: isEn ? 'Whether you need to build a data-driven strategy, manage your social media presence, or analyze your business numbers... I am here to help you grow.' : 'سواء كنت بحاجة لبناء استراتيجية مبنية على البيانات، إدارة تواجدك على السوشيال ميديا، أو تحليل أرقام مشروعك... أنا هنا لمساعدتك على النمو.',
         btnInq: isEn ? 'Inquiry' : 'استفسار',
         btnCons: isEn ? 'Consultation' : 'استشارة',
         nameLabel: isEn ? 'Your Name' : 'اسمك',
@@ -266,6 +269,11 @@
 
     const t = texts[formMode];
     
+    // تغيير العنوان الرئيسي والوصف
+    document.getElementById('page-title').innerText = t.pageTitle;
+    document.getElementById('page-subtitle').innerText = t.pageSubtitle;
+
+    // تغيير باقي النصوص
     document.getElementById('btn-inquiry').innerText = t.btnInq;
     document.getElementById('btn-consultation').innerText = t.btnCons;
     document.getElementById('lbl-name').innerText = t.nameLabel;
