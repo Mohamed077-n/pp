@@ -8,148 +8,177 @@
   <style>
     /* ----- RESET & BASE ----- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-dark: #0d0f14;
+      --bg-card: #151a21;
+      --primary: #a78bfa;
+      --secondary: #6c8cff;
+      --text-main: #eaeef2;
+      --text-muted: #b8c0cc;
+    }
     body {
-      background-color: #0d0f14; color: #eaeef2;
+      background-color: var(--bg-dark); color: var(--text-main);
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column;
-      transition: all 0.3s ease;
+      transition: all 0.3s ease; overflow-x: hidden;
     }
     body.rtl { direction: rtl; text-align: right; }
 
     a { text-decoration: none; color: inherit; }
     .container { max-width: 800px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
-    /* ----- HEADER / NAV (Sidebar Design) ----- */
+    /* ----- MODERN HEADER / NAV ----- */
     header {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(13, 15, 20, 0.85); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.05); padding: 10px 0;
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      background: rgba(13, 15, 20, 0.7); backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.05); padding: 12px 0;
+      transition: 0.3s ease;
     }
-    .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; }
+    .nav { display: flex; justify-content: space-between; align-items: center; }
     
     .nav-logo {
-      height: 55px; width: 55px; object-fit: cover;
+      height: 50px; width: 50px; object-fit: cover;
       border-radius: 50%; background-color: #fff; padding: 2px;
+      box-shadow: 0 0 15px rgba(167, 139, 250, 0.2);
       transition: transform 0.3s ease;
     }
     .nav-logo:hover { transform: scale(1.05); }
 
-    .menu-toggle {
-      display: none; font-size: 1.8rem; color: #eaeef2; cursor: pointer;
-      transition: color 0.3s;
-    }
-    .menu-toggle:hover { color: #a78bfa; }
-
-    .nav-menu { display: flex; align-items: center; gap: 2rem; }
+    .nav-menu { display: flex; align-items: center; gap: 2.5rem; }
     .nav-links { display: flex; gap: 2rem; list-style: none; font-weight: 500; align-items: center; }
-    .nav-links a { font-size: 1rem; transition: color 0.2s; }
-    .nav-links a:hover { color: #a78bfa; }
+    .nav-links a { font-size: 1rem; transition: color 0.2s; position: relative; }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+      background: var(--primary); transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover::after { width: 100%; }
     
     .lang-btn {
-      background: #1e232b; border: 1px solid #a78bfa; color: #a78bfa;
-      padding: 6px 16px; border-radius: 20px; cursor: pointer;
-      font-weight: bold; font-size: 0.9rem; transition: 0.3s;
+      background: rgba(167, 139, 250, 0.1); border: 1px solid var(--primary); color: var(--primary);
+      padding: 8px 20px; border-radius: 30px; cursor: pointer;
+      font-weight: 600; font-size: 0.9rem; transition: 0.3s;
     }
-    .lang-btn:hover { background: #a78bfa; color: #0d0f14; }
+    .lang-btn:hover { background: var(--primary); color: var(--bg-dark); }
+
+    .menu-toggle {
+      display: none; font-size: 1.5rem; color: var(--text-main); cursor: pointer;
+      background: var(--bg-card); padding: 10px 14px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
 
     .close-menu { display: none; }
     .menu-overlay { display: none; }
+    
+    @media (max-width: 900px) {
+      .menu-toggle { display: block; }
+      .nav-menu {
+        position: fixed; top: 0; right: -100%;
+        width: 80%; max-width: 320px; height: 100vh;
+        background: rgba(21, 26, 33, 0.95); backdrop-filter: blur(20px);
+        border-left: 1px solid rgba(255,255,255,0.05);
+        flex-direction: column; justify-content: flex-start; align-items: flex-start;
+        padding: 80px 20px 40px;
+        transition: right 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
+        z-index: 1001; box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+      }
+      body.rtl .nav-menu {
+        right: auto; left: -100%; border-left: none; border-right: 1px solid rgba(255,255,255,0.05);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+      }
+      .nav-menu.active { right: 0; }
+      body.rtl .nav-menu.active { left: 0; }
+
+      .nav-links { flex-direction: column; width: 100%; gap: 10px; align-items: stretch; }
+      .nav-links li { width: 100%; }
+      .nav-links a {
+        font-size: 1.1rem; display: flex; align-items: center; gap: 12px;
+        padding: 14px 20px; border-radius: 14px; background: rgba(255,255,255,0.02);
+        transition: 0.3s;
+      }
+      .nav-links a i { width: 24px; text-align: center; color: var(--primary); font-size: 1.2rem; }
+      .nav-links a:hover, .nav-links a.active-link { background: rgba(167, 139, 250, 0.15); color: var(--primary); }
+      .nav-links a::after { display: none; }
+      .lang-btn { margin-top: 20px; width: 100%; text-align: center; }
+
+      .close-menu {
+        display: flex; align-items: center; justify-content: center;
+        position: absolute; top: 20px; right: 20px;
+        width: 40px; height: 40px; border-radius: 50%;
+        background: rgba(255,255,255,0.05); cursor: pointer; color: var(--text-main);
+        transition: 0.3s;
+      }
+      body.rtl .close-menu { right: auto; left: 20px; }
+      .close-menu:hover { background: rgba(255, 87, 87, 0.2); color: #ff5757; }
+
+      .menu-overlay {
+        display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.7); z-index: 1000; opacity: 0; pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+      .menu-overlay.active { opacity: 1; pointer-events: auto; }
+    }
 
     /* ----- CONSULTATION SECTION ----- */
-    .consultation { padding: 60px 0; flex-grow: 1; display: flex; align-items: center; }
-    .consult-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; }
+    .consultation { padding: 140px 0 80px; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+    .consult-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 600px; margin: 0 auto; }
     
     .consult-header { text-align: center; margin-bottom: 40px; }
-    .consult-header h1 { font-size: 2.5rem; margin-bottom: 1rem; color: #a78bfa; transition: 0.3s; }
-    .consult-header p { color: #b8c0cc; font-size: 1.1rem; max-width: 600px; margin: 0 auto; transition: 0.3s; }
+    .consult-header h1 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary); transition: 0.3s; font-weight: 700; }
+    .consult-header p { color: var(--text-muted); font-size: 1.1rem; margin: 0 auto; transition: 0.3s; }
 
     .consult-form {
-      background: #151a21; padding: 40px; border-radius: 24px; border: 1px solid #252b34;
-      width: 100%; max-width: 600px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      background: var(--bg-card); padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05);
+      width: 100%; box-shadow: 0 15px 50px rgba(0,0,0,0.4);
     }
     
     .form-toggle {
-      display: flex; background: #0d0f14; border-radius: 12px;
-      padding: 6px; margin-bottom: 24px; border: 1px solid #2a2f3a;
+      display: flex; background: rgba(0,0,0,0.3); border-radius: 14px;
+      padding: 6px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.05);
     }
     .toggle-btn {
-      flex: 1; padding: 10px; background: transparent; border: none;
-      color: #8892a0; font-weight: 600; font-size: 0.95rem;
-      cursor: pointer; border-radius: 8px; transition: 0.3s;
-      font-family: inherit;
+      flex: 1; padding: 12px; background: transparent; border: none;
+      color: var(--text-muted); font-weight: 600; font-size: 0.95rem;
+      cursor: pointer; border-radius: 10px; transition: 0.3s; font-family: inherit;
     }
-    .toggle-btn.active { background: #a78bfa; color: #0d0f14; }
+    .toggle-btn.active { background: var(--primary); color: var(--bg-dark); box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3); }
 
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; margin-bottom: 8px; color: #c8d0dd; font-weight: 500; }
+    .form-group { margin-bottom: 24px; }
+    .form-group label { display: block; margin-bottom: 10px; color: var(--text-main); font-weight: 600; font-size: 0.95rem; }
     .form-control {
-      width: 100%; padding: 12px 16px; border-radius: 12px;
-      background: #0d0f14; border: 1px solid #2a2f3a; color: #fff;
-      font-family: inherit; transition: 0.3s;
+      width: 100%; padding: 14px 18px; border-radius: 14px;
+      background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.08); color: #fff;
+      font-family: inherit; transition: 0.3s; font-size: 0.95rem;
     }
-    .form-control:focus { outline: none; border-color: #a78bfa; box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2); }
+    .form-control:focus { outline: none; border-color: var(--primary); background: rgba(0,0,0,0.4); box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1); }
     
     select.form-control {
       appearance: none; -webkit-appearance: none;
       background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23a78bfa%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-      background-repeat: no-repeat; background-position: right 1rem center; background-size: 12px;
+      background-repeat: no-repeat; background-position: right 1.2rem center; background-size: 12px;
     }
-    body.rtl select.form-control { background-position: left 1rem center; }
-    select.form-control option { background: #0d0f14; color: #fff; }
+    body.rtl select.form-control { background-position: left 1.2rem center; }
+    select.form-control option { background: var(--bg-card); color: #fff; }
 
     #consultation-extra-fields { display: none; animation: fadeIn 0.4s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
     .btn-primary {
-      display: inline-block; padding: 12px 32px; border-radius: 40px;
-      font-weight: 600; transition: all 0.3s; border: none; cursor: pointer;
-      background: linear-gradient(135deg, #6c8cff, #a78bfa); color: #fff;
-      box-shadow: 0 8px 24px rgba(108, 140, 255, 0.25);
-      width: 100%; font-size: 1rem;
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 16px 32px; border-radius: 14px; font-weight: 700; font-size: 1.05rem;
+      transition: all 0.3s; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--secondary), var(--primary)); color: #fff;
+      box-shadow: 0 10px 30px rgba(108, 140, 255, 0.3);
+      width: 100%;
     }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(108, 140, 255, 0.4); }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(108, 140, 255, 0.5); }
 
-    footer { padding: 24px 0; border-top: 1px solid #1e232b; text-align: center; color: #5a6475; font-size: 0.9rem; }
+    footer { padding: 30px 0; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #5a6475; font-size: 0.9rem; width: 100%; }
 
-    /* ----- RESPONSIVE (SIDEBAR LOGIC) ----- */
-    @media (max-width: 900px) {
-      .menu-toggle { display: block; }
-      .nav-menu {
-        position: fixed; top: 0; right: -100%;
-        width: 280px; height: 100vh;
-        background: #151a21;
-        flex-direction: column;
-        justify-content: flex-start;
-        padding: 80px 20px 20px;
-        transition: right 0.3s ease;
-        z-index: 1001;
-        border-left: 1px solid #252b34;
-      }
-      body.rtl .nav-menu { right: auto; left: -100%; border-left: none; border-right: 1px solid #252b34; }
-      .nav-menu.active { right: 0; }
-      body.rtl .nav-menu.active { left: 0; }
-
-      .nav-links { flex-direction: column; width: 100%; gap: 1.5rem; align-items: flex-start; }
-      .nav-links a { font-size: 1.2rem; display: block; width: 100%; }
-      body.rtl .nav-links { align-items: flex-start; }
-
-      .lang-btn { margin-top: 2rem; width: 100%; }
-
-      .close-menu {
-        display: block; position: absolute; top: 20px; right: 20px;
-        font-size: 1.5rem; cursor: pointer; color: #a78bfa;
-      }
-      body.rtl .close-menu { right: auto; left: 20px; }
-
-      .menu-overlay {
-        display: none; position: fixed; top: 0; left: 0;
-        width: 100%; height: 100%; background: rgba(0,0,0,0.7);
-        z-index: 1000;
-      }
-      .menu-overlay.active { display: block; }
-
+    @media (max-width: 600px) {
       .consult-header h1 { font-size: 2rem; }
       .consult-form { padding: 24px; }
+      .consultation { padding-top: 120px; }
     }
   </style>
 </head>
@@ -158,7 +187,6 @@
 <!-- ====== HEADER ====== -->
 <header>
   <div class="container nav">
-    
     <a href="index.html">
       <img src="logo.png" alt="Mohamed Nagiub Logo" class="nav-logo">
     </a>
@@ -173,9 +201,9 @@
       </div>
       
       <ul class="nav-links">
-        <li><a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a></li>
-        <li><a href="index.html#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
-        <li><a href="consultation.html" style="color: #a78bfa;" data-en="Consultation" data-ar="الاستشارات">Consultation</a></li>
+        <li><a href="index.html"><i class="fas fa-home"></i> <span data-en="Home" data-ar="الرئيسية">Home</span></a></li>
+        <li><a href="index.html#projects"><i class="fas fa-folder-open"></i> <span data-en="Projects" data-ar="المشاريع">Projects</span></a></li>
+        <li><a href="consultation.html" class="active-link"><i class="fas fa-calendar-check"></i> <span data-en="Consultation" data-ar="الاستشارات">Consultation</span></a></li>
       </ul>
       
       <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">AR / EN</button>
@@ -391,7 +419,6 @@
   closeMenu.addEventListener('click', toggleMenu);
   menuOverlay.addEventListener('click', toggleMenu);
 
-  // Close menu when clicking a link
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
       if (navMenu.classList.contains('active')) toggleMenu();
