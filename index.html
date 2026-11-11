@@ -35,13 +35,26 @@
     }
     .highlight { color: #a78bfa; }
 
-    /* ----- HEADER / NAV ----- */
+    /* ----- HEADER / NAV (مع اللوجو الجديد) ----- */
     header {
       position: sticky; top: 0; z-index: 100;
       background: rgba(13, 15, 20, 0.85); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.05); padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05); padding: 10px 0;
     }
     .nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    
+    /* تصميم اللوجو */
+    .nav-logo {
+      height: 55px; 
+      width: 55px; 
+      object-fit: cover;
+      border-radius: 50%; 
+      background-color: #fff; /* خلفية بيضاء عشان اللوجو يبان */
+      padding: 2px;
+      transition: transform 0.3s ease;
+    }
+    .nav-logo:hover { transform: scale(1.05); }
+
     .nav-links { display: flex; gap: 2rem; list-style: none; font-weight: 500; align-items: center; margin: 0 auto; }
     .nav-links a { font-size: 1rem; transition: color 0.2s; position: relative; }
     .nav-links a::after {
@@ -215,6 +228,7 @@
     /* ----- RESPONSIVE ----- */
     @media (max-width: 900px) {
       .nav { justify-content: center; }
+      .nav-logo { height: 45px; width: 45px; }
       .hero-grid, .about-grid { grid-template-columns: 1fr; text-align: center; }
       .hero-content h1 { font-size: 2.6rem; }
       .hero-sub { margin: 0 auto 1.5rem; }
@@ -237,14 +251,20 @@
 <!-- ====== HEADER ====== -->
 <header>
   <div class="container nav">
+    
+    <!-- اللوجو الجديد -->
+    <a href="index.html">
+      <img src="logo.png" alt="Mohamed Nagiub Logo" class="nav-logo">
+    </a>
+
     <ul class="nav-links">
       <li><a href="#about" data-en="About" data-ar="عني">About</a></li>
       <li><a href="#services" data-en="Services" data-ar="الخدمات">Services</a></li>
       <li><a href="#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
-      <!-- زرار يروح لصفحة الاستشارات المستقلة -->
       <li><a href="consultation.html" data-en="Consultation" data-ar="الاستشارات">Consultation</a></li>
       <li><a href="#contact" data-en="Contact" data-ar="تواصل معي">Contact</a></li>
     </ul>
+    
     <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">AR / EN</button>
   </div>
 </header>
@@ -550,7 +570,6 @@
 <script>
   let currentLang = 'en';
 
-  // Load language preference from localStorage
   if(localStorage.getItem('siteLang') === 'ar') {
     currentLang = 'ar';
     document.body.classList.add('rtl');
@@ -559,7 +578,7 @@
 
   function toggleLanguage() {
     currentLang = currentLang === 'en' ? 'ar' : 'en';
-    localStorage.setItem('siteLang', currentLang); // Save preference
+    localStorage.setItem('siteLang', currentLang);
     
     const toggleBtn = document.getElementById('langToggle');
     
@@ -582,7 +601,6 @@
     });
   }
 
-  // Initialize language on load
   window.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('langToggle');
     if (currentLang === 'ar') {
@@ -597,7 +615,6 @@
     }
   });
 
-  // Typing Effect
   const typedText = document.getElementById('typed-text');
   const words = ['Data Analyst', 'Power BI Developer', 'Social Media Manager', 'Insight Generator', 'Dashboard Designer'];
   let wordIndex = 0, charIndex = 0, isDeleting = false;
@@ -626,7 +643,6 @@
   }
   typeEffect();
 
-  // Scroll Reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -635,7 +651,6 @@
   }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
   reveals.forEach(el => observer.observe(el));
 
-  // Smooth nav scroll
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
@@ -644,7 +659,6 @@
     });
   });
 
-  // Modal Functions
   function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
