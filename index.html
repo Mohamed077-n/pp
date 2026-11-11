@@ -16,16 +16,18 @@
       --text-main: #eaeef2;
       --text-muted: #b8c0cc;
     }
+    html { scroll-behavior: smooth; } /* تفعيل النزول الناعم */
+    
     body {
       background-color: var(--bg-dark); color: var(--text-main);
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      line-height: 1.6; scroll-behavior: smooth; transition: all 0.3s ease;
+      line-height: 1.6; transition: all 0.3s ease;
       overflow-x: hidden;
     }
     body.rtl { direction: rtl; text-align: right; }
-    body.rtl .nav-links a::after { left: auto; right: 0; }
-    body.rtl .section-title::after { left: auto; right: 0; }
-    body.rtl .hero-visual .floating-badge { right: auto; left: 5%; }
+    
+    /* مسافة عشان القايمة الثابتة متغطيش على العنوان */
+    section, #home { scroll-margin-top: 90px; }
 
     a { text-decoration: none; color: inherit; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
@@ -122,7 +124,7 @@
       }
       .nav-links a i { width: 24px; text-align: center; color: var(--primary); font-size: 1.2rem; }
       .nav-links a:hover, .nav-links a.active-link { background: rgba(167, 139, 250, 0.15); color: var(--primary); }
-      .nav-links a::after { display: none; } /* Hide underline */
+      .nav-links a::after { display: none; }
 
       .lang-btn { margin-top: 20px; width: 100%; text-align: center; }
 
@@ -673,7 +675,7 @@
     }
   });
 
-  // Sidebar Logic
+  // Sidebar Logic (FIXED)
   const mobileMenu = document.getElementById('mobile-menu');
   const navMenu = document.getElementById('nav-menu');
   const closeMenu = document.getElementById('close-menu');
@@ -689,28 +691,11 @@
   closeMenu.addEventListener('click', toggleMenu);
   menuOverlay.addEventListener('click', toggleMenu);
 
-  // Smooth nav scroll (FIXED)
+  // إغلاق القائمة فقط عند الضغط على أي لينك، والمتصفح سيتصرف تلقائياً وينزل للقسم
   document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      
-      if (href.startsWith('#') && href !== '#') {
-        e.preventDefault();
-        const target = document.querySelector(href);
-        
-        if (navMenu.classList.contains('active')) {
-          toggleMenu();
-        }
-        
-        setTimeout(() => {
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 400);
-      } else {
-        if (navMenu.classList.contains('active')) {
-          toggleMenu();
-        }
+    link.addEventListener('click', function() {
+      if (navMenu.classList.contains('active')) {
+        toggleMenu();
       }
     });
   });
