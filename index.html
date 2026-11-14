@@ -263,7 +263,7 @@
     .project-tech span { background: rgba(0,0,0,0.3); padding: 6px 16px; border-radius: 30px; font-size: 0.8rem; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.05); }
     
     .project-actions { display: flex; gap: 15px; flex-wrap: wrap; margin-top: auto; }
-    .project-actions .btn { flex: 1; justify-content: center; } /* زرار ياخد عرض الكارد */
+    .project-actions .btn { flex: 1; justify-content: center; font-size: 0.9rem; padding: 10px 15px; } /* زرار ياخد عرض الكارد */
 
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem; }
     .mini-card { padding: 30px; margin-bottom: 0; display: flex; flex-direction: column; }
@@ -637,9 +637,13 @@
           Complete database design for hospital management...
         </p>
         <div class="project-tech"><span>SQL</span><span data-en="Relations" data-ar="العلاقات">Relations</span><span data-en="Normalization" data-ar="التطبيع">Normalization</span></div>
-        <div class="project-actions">
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:10px 20px;" onclick="openModal('hospitalErdModal')"><i class="fas fa-project-diagram"></i> ERD</a>
+        
+        <!-- أزرار الـ SQL هنا -->
+        <div class="project-actions" style="display: flex; gap: 10px; width: 100%;">
+          <a href="https://github.com/Mohamed077-n/pp/blob/main/hospital.sql" target="_blank" class="btn btn-outline" style="flex: 1; padding:10px 10px; font-size: 0.85rem;"><i class="fas fa-code"></i> SQL Code</a>
+          <a href="javascript:void(0)" class="btn btn-outline" style="flex: 1; padding:10px 10px; font-size: 0.85rem;" onclick="openModal('hospitalErdModal')"><i class="fas fa-project-diagram"></i> ERD</a>
         </div>
+
       </div>
 
       <div class="mini-card reveal">
@@ -651,9 +655,13 @@
           Scalable schema for e-commerce...
         </p>
         <div class="project-tech"><span>SQL</span><span>ERD</span><span data-en="Joins" data-ar="الربط">Joins</span></div>
-        <div class="project-actions">
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:10px 20px;" onclick="openModal('ecommerceErdModal')"><i class="fas fa-project-diagram"></i> ERD</a>
+        
+        <!-- أزرار الـ SQL هنا -->
+        <div class="project-actions" style="display: flex; gap: 10px; width: 100%;">
+          <a href="https://github.com/Mohamed077-n/pp/blob/main/Ecommerce.sql" target="_blank" class="btn btn-outline" style="flex: 1; padding:10px 10px; font-size: 0.85rem;"><i class="fas fa-code"></i> SQL Code</a>
+          <a href="javascript:void(0)" class="btn btn-outline" style="flex: 1; padding:10px 10px; font-size: 0.85rem;" onclick="openModal('ecommerceErdModal')"><i class="fas fa-project-diagram"></i> ERD</a>
         </div>
+
       </div>
     </div>
 
