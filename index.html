@@ -261,8 +261,10 @@
     .project-body p { color: var(--text-muted); margin-bottom: 20px; }
     .project-tech { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
     .project-tech span { background: rgba(0,0,0,0.3); padding: 6px 16px; border-radius: 30px; font-size: 0.8rem; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.05); }
-    .project-actions { display: flex; gap: 15px; flex-wrap: wrap; }
     
+    .project-actions { display: flex; gap: 15px; flex-wrap: wrap; margin-top: auto; }
+    .project-actions .btn { flex: 1; justify-content: center; } /* زرار ياخد عرض الكارد */
+
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem; }
     .mini-card { padding: 30px; margin-bottom: 0; display: flex; flex-direction: column; }
     .mini-card p { flex-grow: 1; margin-bottom: 20px; }
@@ -496,7 +498,7 @@
           <span data-en="Analytics" data-ar="تحليلات">Analytics</span>
         </div>
         <div class="project-actions">
-          <a href="javascript:void(0)" class="btn btn-primary" style="padding:10px 24px; font-size:0.9rem;" onclick="openModal('socialMediaModal')">
+          <a href="javascript:void(0)" class="btn btn-primary" style="width: 100%; padding:12px 24px;" onclick="openModal('socialMediaModal')">
             <i class="fas fa-eye"></i> <span data-en="View Analytics" data-ar="عرض التحليلات">View Analytics</span>
           </a>
         </div>
@@ -517,7 +519,7 @@
           <span>Excel</span><span data-en="Data Cleaning" data-ar="تنظيف البيانات">Data Cleaning</span><span data-en="Pivot Tables" data-ar="الجداول المحورية">Pivot Tables</span><span data-en="Dashboard Design" data-ar="تصميم لوحة القيادة">Dashboard Design</span>
         </div>
         <div class="project-actions">
-          <a href="javascript:void(0)" class="btn btn-primary" style="padding:10px 24px; font-size:0.9rem;" onclick="openModal('dashboardModal')">
+          <a href="javascript:void(0)" class="btn btn-primary" style="width: 100%; padding:12px 24px;" onclick="openModal('dashboardModal')">
             <i class="fas fa-eye"></i> <span data-en="View Dashboard" data-ar="عرض اللوحة">View Dashboard</span>
           </a>
         </div>
@@ -537,8 +539,8 @@
           Interactive dashboard tracking 31K orders...
         </p>
         <div class="project-tech"><span>Power BI</span><span data-en="Data Modeling" data-ar="نمذجة البيانات">Data Modeling</span></div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:8px 20px; font-size:0.85rem;" onclick="openModal('powerbiSalesModal')"><i class="fas fa-eye"></i> <span data-en="View" data-ar="عرض">View</span></a>
+        <div class="project-actions">
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:10px 20px;" onclick="openModal('powerbiSalesModal')"><i class="fas fa-eye"></i> <span data-en="View" data-ar="عرض">View</span></a>
         </div>
       </div>
 
@@ -552,8 +554,8 @@
           HR dashboard tracking 89 employees...
         </p>
         <div class="project-tech"><span>Power BI</span><span data-en="HR Metrics" data-ar="مؤشرات الموارد البشرية">HR Metrics</span></div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:8px 20px; font-size:0.85rem;" onclick="openModal('powerbiHRModal')"><i class="fas fa-eye"></i> <span data-en="View" data-ar="عرض">View</span></a>
+        <div class="project-actions">
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:10px 20px;" onclick="openModal('powerbiHRModal')"><i class="fas fa-eye"></i> <span data-en="View" data-ar="عرض">View</span></a>
         </div>
       </div>
 
@@ -567,8 +569,8 @@
           E-commerce dashboard analyzing 10K orders...
         </p>
         <div class="project-tech"><span>Power BI</span><span data-en="Customer Segmentation" data-ar="تقسيم العملاء">Customer Segmentation</span></div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:8px 20px; font-size:0.85rem;" onclick="openModal('powerbiEcommerceModal')"><i class="fas fa-eye"></i> <span data-en="View" data-ar="عرض">View</span></a>
+        <div class="project-actions">
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:10px 20px;" onclick="openModal('powerbiEcommerceModal')"><i class="fas fa-eye"></i> <span data-en="View" data-ar="عرض">View</span></a>
         </div>
       </div>
     </div>
@@ -585,8 +587,8 @@
           Complete database design for hospital management...
         </p>
         <div class="project-tech"><span>SQL</span><span data-en="Relations" data-ar="العلاقات">Relations</span><span data-en="Normalization" data-ar="التطبيع">Normalization</span></div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:8px 20px; font-size:0.85rem;" onclick="openModal('hospitalErdModal')"><i class="fas fa-project-diagram"></i> ERD</a>
+        <div class="project-actions">
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:10px 20px;" onclick="openModal('hospitalErdModal')"><i class="fas fa-project-diagram"></i> ERD</a>
         </div>
       </div>
 
@@ -599,8 +601,8 @@
           Scalable schema for e-commerce...
         </p>
         <div class="project-tech"><span>SQL</span><span>ERD</span><span data-en="Joins" data-ar="الربط">Joins</span></div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="javascript:void(0)" class="btn btn-outline" style="padding:8px 20px; font-size:0.85rem;" onclick="openModal('ecommerceErdModal')"><i class="fas fa-project-diagram"></i> ERD</a>
+        <div class="project-actions">
+          <a href="javascript:void(0)" class="btn btn-outline" style="padding:10px 20px;" onclick="openModal('ecommerceErdModal')"><i class="fas fa-project-diagram"></i> ERD</a>
         </div>
       </div>
     </div>
