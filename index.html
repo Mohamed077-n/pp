@@ -289,27 +289,77 @@
       .mini-card { padding: 20px; }
     }
 
-    /* ====== FIXED MODALS (No Horizontal Scroll, Fits Screen) ====== */
+    /* ====== SLIDER MODALS ====== */
     .modal-overlay {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.95); z-index: 2000;
       justify-content: center; align-items: center; 
-      overflow-y: auto; overflow-x: hidden;
-      padding: 20px;
+      padding: 20px; overflow: hidden;
     }
     .modal-overlay.active { display: flex; }
     
-    .modal-content { 
-      display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center;
-      width: 100%; max-width: 1200px; margin: 0 auto;
+    .slider-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .slider-image {
+      display: none;
+      max-width: 100%;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid #2a2f3a;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      object-fit: contain;
+      animation: fadeIn 0.4s ease;
+    }
+    .slider-image.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
     }
     
-    .modal-content img { 
-      max-width: 100%; max-height: 90vh; width: auto; height: auto;
-      border-radius: 12px; border: 1px solid #2a2f3a; 
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8); object-fit: contain;
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(30, 35, 43, 0.8);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      z-index: 10;
+      transition: 0.3s;
+      backdrop-filter: blur(5px);
     }
+    .slider-btn:hover { background: var(--primary); color: var(--bg-dark); }
     
+    .slider-btn.prev { left: -60px; }
+    .slider-btn.next { right: -60px; }
+    body.rtl .slider-btn.prev { left: auto; right: -60px; }
+    body.rtl .slider-btn.next { right: auto; left: -60px; }
+    
+    @media (max-width: 768px) {
+      .slider-btn.prev { left: 10px; }
+      .slider-btn.next { right: 10px; }
+      body.rtl .slider-btn.prev { left: auto; right: 10px; }
+      body.rtl .slider-btn.next { right: auto; left: 10px; }
+    }
+
     .modal-close {
       position: fixed; top: 20px; right: 20px; background: #1e232b; border: 1px solid #2a2f3a; color: #eaeef2;
       font-size: 28px; width: 48px; height: 48px; border-radius: 50%; cursor: pointer;
@@ -620,7 +670,7 @@
     <div class="contact-links reveal">
       <a href="mailto:mohamednagiub011@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
       <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-      <a href="https://github.com/Mohamed077-n" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://github.com/Mohamed077-n" target="_blank" aria-label="GitHub"><i class="fas fa-github"></i></a>
       <a href="https://wa.me/201272137273" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
   </div>
@@ -636,45 +686,70 @@
 </footer>
 
 <!-- ====== MODALS ====== -->
-<!-- Social Media Modal -->
+<!-- Social Media Modal (Single Image) -->
 <div class="modal-overlay" id="socialMediaModal">
   <button class="modal-close" onclick="closeModal('socialMediaModal')">&times;</button>
-  <div class="modal-content"><img src="sm-project.png" alt="Social Media Analytics"></div>
+  <div class="slider-container">
+    <img src="sm-project.png" class="slider-image active" alt="Social Media Analytics">
+  </div>
 </div>
 
+<!-- Excel Dashboard Modal (Single Image) -->
 <div class="modal-overlay" id="dashboardModal">
   <button class="modal-close" onclick="closeModal('dashboardModal')">&times;</button>
-  <div class="modal-content"><img src="dashboard.png" alt="Excel Sales Dashboard"></div>
+  <div class="slider-container">
+    <img src="dashboard.png" class="slider-image active" alt="Excel Sales Dashboard">
+  </div>
 </div>
+
+<!-- Power BI Sales Modal (Single Image) -->
 <div class="modal-overlay" id="powerbiSalesModal">
   <button class="modal-close" onclick="closeModal('powerbiSalesModal')">&times;</button>
-  <div class="modal-content"><img src="image.png" alt="Sales Report"></div>
+  <div class="slider-container">
+    <img src="image.png" class="slider-image active" alt="Sales Report">
+  </div>
 </div>
+
+<!-- Power BI HR Modal (Slider - 3 Images) -->
 <div class="modal-overlay" id="powerbiHRModal">
   <button class="modal-close" onclick="closeModal('powerbiHRModal')">&times;</button>
-  <div class="modal-content">
-    <img src="image 1.png" alt="HR Analysis">
-    <img src="image 2.png" alt="Department Analysis">
-    <img src="image 3.png" alt="Employees details">
+  <div class="slider-container">
+    <button class="slider-btn prev" onclick="changeSlide('powerbiHRModal', -1)"><i class="fas fa-chevron-left"></i></button>
+    <img src="image 1.png" class="slider-image active" alt="HR Analysis">
+    <img src="image 2.png" class="slider-image" alt="Department Analysis">
+    <img src="image 3.png" class="slider-image" alt="Employees details">
+    <button class="slider-btn next" onclick="changeSlide('powerbiHRModal', 1)"><i class="fas fa-chevron-right"></i></button>
   </div>
 </div>
+
+<!-- Power BI E-Commerce Modal (Slider - 5 Images) -->
 <div class="modal-overlay" id="powerbiEcommerceModal">
   <button class="modal-close" onclick="closeModal('powerbiEcommerceModal')">&times;</button>
-  <div class="modal-content">
-    <img src="image 4.png" alt="E-commerce store 1">
-    <img src="image 5.png" alt="E-commerce store 2">
-    <img src="image 6.png" alt="E-commerce store 3">
-    <img src="image 7.png" alt="E-commerce store 4">
-    <img src="image 8.png" alt="E-commerce store 5">
+  <div class="slider-container">
+    <button class="slider-btn prev" onclick="changeSlide('powerbiEcommerceModal', -1)"><i class="fas fa-chevron-left"></i></button>
+    <img src="image 4.png" class="slider-image active" alt="E-commerce store 1">
+    <img src="image 5.png" class="slider-image" alt="E-commerce store 2">
+    <img src="image 6.png" class="slider-image" alt="E-commerce store 3">
+    <img src="image 7.png" class="slider-image" alt="E-commerce store 4">
+    <img src="image 8.png" class="slider-image" alt="E-commerce store 5">
+    <button class="slider-btn next" onclick="changeSlide('powerbiEcommerceModal', 1)"><i class="fas fa-chevron-right"></i></button>
   </div>
 </div>
+
+<!-- Hospital ERD Modal (Single Image) -->
 <div class="modal-overlay" id="hospitalErdModal">
   <button class="modal-close" onclick="closeModal('hospitalErdModal')">&times;</button>
-  <div class="modal-content"><img src="hospital-erd.png" alt="Hospital ERD"></div>
+  <div class="slider-container">
+    <img src="hospital-erd.png" class="slider-image active" alt="Hospital ERD">
+  </div>
 </div>
+
+<!-- E-Commerce ERD Modal (Single Image) -->
 <div class="modal-overlay" id="ecommerceErdModal">
   <button class="modal-close" onclick="closeModal('ecommerceErdModal')">&times;</button>
-  <div class="modal-content"><img src="ecommerce-erd.png" alt="E-Commerce ERD"></div>
+  <div class="slider-container">
+    <img src="ecommerce-erd.png" class="slider-image active" alt="E-Commerce ERD">
+  </div>
 </div>
 
 <!-- ====== SCRIPTS ====== -->
@@ -797,26 +872,56 @@
   }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
   reveals.forEach(el => observer.observe(el));
 
+  // ====== MODAL & SLIDER LOGIC ======
   function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
+      
+      // Reset slider to first image when opening
+      const images = modal.querySelectorAll('.slider-image');
+      if (images.length > 0) {
+        images.forEach(img => img.classList.remove('active'));
+        images[0].classList.add('active');
+      }
     }
   }
+
   function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
       modal.classList.remove('active');
       document.body.style.overflow = 'auto';
-      modal.scrollLeft = 0; 
     }
   }
+
+  function changeSlide(modalId, direction) {
+    const modal = document.getElementById(modalId);
+    const images = modal.querySelectorAll('.slider-image');
+    if (images.length <= 1) return;
+    
+    let activeIndex = -1;
+    images.forEach((img, index) => {
+      if (img.classList.contains('active')) activeIndex = index;
+    });
+    
+    images[activeIndex].classList.remove('active');
+    
+    let newIndex = activeIndex + direction;
+    if (newIndex >= images.length) newIndex = 0;
+    if (newIndex < 0) newIndex = images.length - 1;
+    
+    images[newIndex].classList.add('active');
+  }
+
   document.querySelectorAll('.modal-overlay').forEach(modal => {
     modal.addEventListener('click', function(e) {
+      // Close only if clicking the overlay background, not the container or buttons
       if (e.target === this) closeModal(this.id);
     });
   });
+  
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       document.querySelectorAll('.modal-overlay.active').forEach(modal => closeModal(modal.id));
