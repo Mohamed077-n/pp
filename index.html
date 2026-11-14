@@ -263,7 +263,7 @@
     .project-tech span { background: rgba(0,0,0,0.3); padding: 6px 16px; border-radius: 30px; font-size: 0.8rem; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.05); }
     
     .project-actions { display: flex; gap: 15px; flex-wrap: wrap; margin-top: auto; }
-    .project-actions .btn { flex: 1; justify-content: center; font-size: 0.9rem; padding: 10px 15px; } /* زرار ياخد عرض الكارد */
+    .project-actions .btn { flex: 1; justify-content: center; font-size: 0.9rem; padding: 10px 15px; }
 
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem; }
     .mini-card { padding: 30px; margin-bottom: 0; display: flex; flex-direction: column; }
@@ -678,7 +678,8 @@
     <div class="contact-links reveal">
       <a href="mailto:mohamednagiub011@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
       <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-      <a href="https://github.com/Mohamed077-n" target="_blank" aria-label="GitHub"><i class="fas fa-github"></i></a>
+      <!-- تم تصليح أيقونة جيت هاب هنا -->
+      <a href="https://github.com/Mohamed077-n" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
       <a href="https://wa.me/201272137273" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
   </div>
@@ -887,7 +888,6 @@
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
       
-      // Reset slider to first image when opening
       const images = modal.querySelectorAll('.slider-image');
       if (images.length > 0) {
         images.forEach(img => img.classList.remove('active'));
@@ -925,7 +925,6 @@
 
   document.querySelectorAll('.modal-overlay').forEach(modal => {
     modal.addEventListener('click', function(e) {
-      // Close only if clicking the overlay background, not the container or buttons
       if (e.target === this) closeModal(this.id);
     });
   });
