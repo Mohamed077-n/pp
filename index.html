@@ -104,9 +104,8 @@
         box-shadow: 0 15px 30px rgba(0,0,0,0.6);
       }
       
-      /* الكلاس اللي بيتضاف بالجافاسكريبت عشان يفتح القائمة */
       .nav-menu.show { 
-        max-height: 500px; 
+        max-height: 600px; 
         padding: 20px;
       }
 
@@ -122,7 +121,12 @@
       .nav-links a::after { display: none; }
 
       .lang-btn { margin-top: 15px; width: 100%; text-align: center; padding: 12px; }
+      
+      .mobile-cv-link { display: block !important; }
     }
+
+    /* إخفاء زرار الـ CV من القائمة في الديسكتوب (لأنه موجود في الهيرو) */
+    .mobile-cv-link { display: none; }
 
     /* ----- HERO ----- */
     .hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 0 40px; }
@@ -151,6 +155,22 @@
     .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(108, 140, 255, 0.5); }
     .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--text-main); }
     .btn-outline:hover { background: rgba(167, 139, 250, 0.1); transform: translateY(-3px); }
+    
+    /* زرار الـ CV */
+    .btn-cv {
+      background: rgba(255, 255, 255, 0.05); 
+      border: 1px solid rgba(255, 255, 255, 0.2); 
+      color: var(--text-main);
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 36px; border-radius: 40px; font-weight: 600;
+      transition: 0.3s;
+    }
+    .btn-cv:hover { 
+      background: rgba(255, 255, 255, 0.1); 
+      border-color: var(--primary); 
+      color: var(--primary); 
+      transform: translateY(-3px); 
+    }
 
     .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; }
     .hero-visual .placeholder-icon {
@@ -296,6 +316,11 @@
         <li><a href="#projects"><i class="fas fa-folder-open"></i> <span data-en="Projects" data-ar="المشاريع">Projects</span></a></li>
         <li><a href="consultation.html"><i class="fas fa-calendar-check"></i> <span data-en="Consultation" data-ar="الاستشارات">Consultation</span></a></li>
         <li><a href="#contact"><i class="fas fa-envelope"></i> <span data-en="Contact" data-ar="تواصل معي">Contact</span></a></li>
+        
+        <!-- زرار الـ CV في القائمة (بيظهر في الموبايل بس) -->
+        <li class="mobile-cv-link">
+          <a href="Mohamed_Nagiub_CV.pdf" target="_blank"><i class="fas fa-file-pdf"></i> <span data-en="View CV" data-ar="السيرة الذاتية">View CV</span></a>
+        </li>
       </ul>
       
       <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">AR / EN</button>
@@ -318,6 +343,11 @@
       <div class="btn-group">
         <a href="#projects" class="btn btn-primary" data-en="View Projects" data-ar="عرض المشاريع">View Projects</a>
         <a href="consultation.html" class="btn btn-outline" data-en="Book Consultation" data-ar="احجز استشارة">Book Consultation</a>
+        
+        <!-- زرار الـ CV الجديد في الهيرو -->
+        <a href="Mohamed_Nagiub_CV.pdf" target="_blank" class="btn btn-cv">
+          <i class="fas fa-file-pdf"></i> <span data-en="View CV" data-ar="السيرة الذاتية">View CV</span>
+        </a>
       </div>
     </div>
     <div class="hero-visual">
